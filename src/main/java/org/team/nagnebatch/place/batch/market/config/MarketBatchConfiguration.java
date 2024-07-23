@@ -3,10 +3,12 @@ package org.team.nagnebatch.place.batch.market.config;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.support.DefaultBatchConfiguration;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -17,15 +19,16 @@ import org.team.nagnebatch.place.batch.market.writer.RestaurantWriter;
 
 @Configuration
 @EnableBatchProcessing
-public class MarketBatchConfiguration {
+public class MarketBatchConfiguration{
 
   private final JobRepository jobRepository;
   private final PlatformTransactionManager transactionManager;
   private final RestaurantReader restaurantReader;
   private final RestaurantWriter restaurantWriter;
 
-  public MarketBatchConfiguration(@Lazy JobRepository jobRepository,
-                                  @Lazy PlatformTransactionManager transactionManager,
+  @Autowired
+  public MarketBatchConfiguration(JobRepository jobRepository,
+                                  PlatformTransactionManager transactionManager,
                                   RestaurantReader restaurantReader,
                                   RestaurantWriter restaurantWriter) {
     this.jobRepository = jobRepository;

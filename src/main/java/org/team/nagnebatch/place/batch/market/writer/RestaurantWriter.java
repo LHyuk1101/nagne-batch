@@ -15,8 +15,12 @@ public class RestaurantWriter {
 
   private static final Logger log = LoggerFactory.getLogger(RestaurantWriter.class);
 
+  private final RestaurantRepository restaurantRepository;
+
   @Autowired
-  private RestaurantRepository restaurantRepository;
+  public RestaurantWriter(RestaurantRepository restaurantRepository) {
+    this.restaurantRepository = restaurantRepository;
+  }
 
   @Bean
   public ItemWriter<Restaurant> writer() {
