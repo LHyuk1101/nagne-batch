@@ -19,38 +19,33 @@ import org.team.nagnebatch.place.batch.market.writer.RestaurantWriter;
 
 @Configuration
 @EnableBatchProcessing
-public class MarketBatchConfiguration{
+public class MarketBatchConfiguration {
 
-  private final JobRepository jobRepository;
-  private final PlatformTransactionManager transactionManager;
   private final RestaurantReader restaurantReader;
   private final RestaurantWriter restaurantWriter;
 
   @Autowired
-  public MarketBatchConfiguration(JobRepository jobRepository,
-                                  PlatformTransactionManager transactionManager,
-                                  RestaurantReader restaurantReader,
-                                  RestaurantWriter restaurantWriter) {
-    this.jobRepository = jobRepository;
-    this.transactionManager = transactionManager;
+  public MarketBatchConfiguration(
+      RestaurantReader restaurantReader,
+      RestaurantWriter restaurantWriter) {
     this.restaurantReader = restaurantReader;
     this.restaurantWriter = restaurantWriter;
   }
 
   @Bean
-  public Job importRestaurantJob() {
+  public Job importRestaurantJob(JobRepository jobRepository, Step step1) {
     return new JobBuilder("importRestaurantJob", jobRepository)
-            .start(step1())
-            .build();
+        .start(step1)
+        .build();
   }
 
   @Bean
-  public Step step1() {
+  public Step step1(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
     return new StepBuilder("step1", jobRepository)
-            .<Restaurant, Restaurant>chunk(10, transactionManager)
-            .reader(restaurantReader.reader())
-            .writer(restaurantWriter.writer())
-            .build();
+        .<Restaurant, Restaurant>chunk(10, transactionManager)
+        .reader(restaurantReader.reader())
+        .writer(restaurantWriter.writer())
+        .build();
   }
 
   @Bean

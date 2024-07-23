@@ -25,7 +25,7 @@ public class JobController {
   private final Job importRestaurantJob;
 
   @Autowired
-  public JobController(JobLauncher jobLauncher, JobLauncher jobLauncher2 ,Job createPlaceJob, Job importRestaurantJob) {
+  public JobController(JobLauncher jobLauncher, Job createPlaceJob, Job importRestaurantJob) {
     this.jobLauncher = jobLauncher;
     this.createPlaceJob = createPlaceJob;
     this.importRestaurantJob = importRestaurantJob;
@@ -41,7 +41,7 @@ public class JobController {
     log.info(">>>> 추가 배치 작업 끝 <<<<");
   }
 
-  @GetMapping("/batch/start")
+  @PostMapping("/batch/start")
   public ResponseEntity<String> startBatch() {
     try {
       JobParameters jobParameters = new JobParametersBuilder()

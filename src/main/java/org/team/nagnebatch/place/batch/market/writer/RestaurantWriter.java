@@ -7,10 +7,11 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.team.nagnebatch.place.batch.market.domain.Restaurant;
 import org.team.nagnebatch.place.batch.market.repository.RestaurantRepository;
 
-@Configuration
+@Component
 public class RestaurantWriter {
 
   private static final Logger log = LoggerFactory.getLogger(RestaurantWriter.class);
