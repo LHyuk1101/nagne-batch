@@ -26,8 +26,8 @@ public class Place {
 
   private double longitude;
 
-  @Enumerated(EnumType.STRING)
-  private ApiType apiType;
+//  @Enumerated(EnumType.STRING)
+//  private ApiType apiType;
 
   protected Place() {}
 
