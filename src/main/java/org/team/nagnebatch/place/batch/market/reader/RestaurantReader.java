@@ -24,6 +24,7 @@ public class RestaurantReader {
             .resource(new ClassPathResource("Chungnam_restaurant_data.csv"))
             .delimited()
             .names("index", "name", "address", "phone_number", "average_rating", "latitude", "longitude", "business_hours")
+            .linesToSkip(1)
             .fieldSetMapper(new BeanWrapperFieldSetMapper<Restaurant>() {{
               setTargetType(Restaurant.class);
             }})
