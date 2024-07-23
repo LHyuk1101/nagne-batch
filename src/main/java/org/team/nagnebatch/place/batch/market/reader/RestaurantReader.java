@@ -21,7 +21,7 @@ public class RestaurantReader {
     log.info("Reading CSV file: Chungnam_restaurant_data.csv");
     return new FlatFileItemReaderBuilder<Restaurant>()
             .name("restaurantItemReader")
-            .resource(new ClassPathResource("Chungnam_restaurant_data.csv"))
+            .resource(new ClassPathResource("Seoul_restaurant_data.csv"))
             .delimited()
             .names("index", "name", "address", "phone_number", "average_rating", "latitude", "longitude", "business_hours")
             .linesToSkip(1)

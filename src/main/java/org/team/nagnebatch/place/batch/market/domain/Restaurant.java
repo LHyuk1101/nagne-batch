@@ -1,9 +1,6 @@
 package org.team.nagnebatch.place.batch.market.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Restaurant {
@@ -18,6 +15,8 @@ public class Restaurant {
   private Double averageRating;
   private Double latitude;
   private Double longitude;
+
+  @Column(length = 500)
   private String businessHours;
 
   // Getters and Setters
