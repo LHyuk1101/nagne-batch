@@ -4,14 +4,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.item.Chunk;
 import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.support.CompositeItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.stereotype.Component;
 import org.team.nagnebatch.place.batch.market.domain.Restaurant;
 import org.team.nagnebatch.place.batch.market.repository.RestaurantRepository;
 
-@Component
+import java.util.Collections;
+
+@Configuration
 public class RestaurantWriter {
 
   private static final Logger log = LoggerFactory.getLogger(RestaurantWriter.class);
@@ -24,7 +26,7 @@ public class RestaurantWriter {
   }
 
   @Bean
-  public ItemWriter<Restaurant> writer() {
+  public ItemWriter<Restaurant> databaseWriter() {
     return new ItemWriter<Restaurant>() {
       @Override
       public void write(Chunk<? extends Restaurant> chunk) throws Exception {
@@ -32,5 +34,12 @@ public class RestaurantWriter {
         restaurantRepository.saveAll(chunk);
       }
     };
+  }
+
+  @Bean
+  public CompositeItemWriter<Restaurant> compositeItemWriter() {
+    CompositeItemWriter<Restaurant> compositeWriter = new CompositeItemWriter<>();
+    compositeWriter.setDelegates(Collections.singletonList(databaseWriter()));
+    return compositeWriter;
   }
 }
