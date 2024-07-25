@@ -1,11 +1,6 @@
 package org.team.nagnebatch.place.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Store {
@@ -17,8 +12,19 @@ public class Store {
   @ManyToOne(fetch = FetchType.LAZY)
   private Place place;
 
+  @Column(length = 500)
   private String openTime;
 
   private String contact;
 
+  public Store(Long id, Place place, String openTime, String contact) {
+    this.id = id;
+    this.place = place;
+    this.openTime = openTime;
+    this.contact = contact;
+  }
+
+  public Store() {
+
+  }
 }

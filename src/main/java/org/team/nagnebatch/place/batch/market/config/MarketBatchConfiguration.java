@@ -12,6 +12,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.team.nagnebatch.place.batch.market.domain.Restaurant;
+import org.team.nagnebatch.place.batch.market.processor.CompositeData;
+import org.team.nagnebatch.place.batch.market.processor.RestaurantProcessor;
 import org.team.nagnebatch.place.batch.market.reader.RestaurantReader;
 import org.team.nagnebatch.place.batch.market.writer.RestaurantWriter;
 
@@ -23,13 +25,16 @@ public class MarketBatchConfiguration {
 
   private final RestaurantReader restaurantReader;
   private final RestaurantWriter restaurantWriter;
+  private final RestaurantProcessor restaurantProcessor;
 
   @Autowired
   public MarketBatchConfiguration(
           RestaurantReader restaurantReader,
-          RestaurantWriter restaurantWriter) {
+          RestaurantWriter restaurantWriter,
+          RestaurantProcessor restaurantProcessor) {
     this.restaurantReader = restaurantReader;
     this.restaurantWriter = restaurantWriter;
+    this.restaurantProcessor = restaurantProcessor;
   }
 
   @Bean
@@ -42,8 +47,9 @@ public class MarketBatchConfiguration {
   @Bean
   public Step step1(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws IOException {
     return new StepBuilder("step1", jobRepository)
-            .<Restaurant, Restaurant>chunk(10, transactionManager)
+            .<Restaurant, CompositeData>chunk(10, transactionManager)
             .reader(restaurantReader.multiResourceItemReader())
+            .processor(restaurantProcessor)
             .writer(restaurantWriter.compositeItemWriter())
             .build();
   }

@@ -38,7 +38,7 @@ public class createPlaceBatchConfig {
   @Bean
   public Step createAttreactionStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
     return new StepBuilder("AttractionCreateStep", jobRepository)
-        .<RequestAttractionDTO, Place>chunk(20, transactionManager)
+        .<RequestAttractionDTO, Place>chunk(30, transactionManager)
         .reader(createPlaceItemReader())
         .writer(createPlaceItemWriter())
         .build();
