@@ -30,4 +30,9 @@ public class PlaceImg {
   public String getImgUrl() {
     return imgUrl;
   }
+
+  public PlaceImg(Place place, String imgUrl) {
+    this.place = place;
+    this.imgUrl = imgUrl;
+  }
 }

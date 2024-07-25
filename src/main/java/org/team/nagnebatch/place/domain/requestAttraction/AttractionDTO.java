@@ -22,6 +22,45 @@ public class AttractionDTO {
 
   private String areaCode;
 
+  public String getAddr1() {
+    return addr1;
+  }
+
+  public int getContentId() {
+    return contentId;
+  }
+
+  public Long getContentTypeId() {
+    return contentTypeId;
+  }
+
+  public String getFirstImage() {
+    return firstImage;
+  }
+
+  public String getFirstImage2() {
+    return firstImage2;
+  }
+
+  public double getLat() {
+    return lat;
+  }
+
+  public double getLng() {
+    return lng;
+  }
+
+  public String getTel() {
+    return tel;
+  }
+
+  public String getTitle() {
+    return title;
+  }
+
+  public String getAreaCode() {
+    return areaCode;
+  }
   public static class Builder {
     private String addr1;
     private int contentId;

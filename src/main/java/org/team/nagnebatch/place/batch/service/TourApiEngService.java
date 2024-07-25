@@ -1,9 +1,13 @@
 package org.team.nagnebatch.place.batch.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.team.nagnebatch.place.batch.util.ApiDataParser;
 import org.team.nagnebatch.place.client.TourApiProvider;
@@ -39,30 +44,40 @@ public class TourApiEngService extends TourApiProvider implements BatchApiServic
     this.festivalReader = festivalReader;
   }
 
-  public ResponseAttraction getLocationBased(int page, int areaCode, int contentTypeId) {
-    ResponseEntity<String> responseJsonData = callTourApi(makeRequestURL(page, areaCode, contentTypeId));
+  public ResponseAttraction getLocationBased(int page) {
+    ResponseEntity<String> responseJsonData = callTourApi(makeRequestURL(page));
     return ApiDataParser.convertToLocation(page, responseJsonData.getBody());
   }
 
-  private String makeRequestURL(int page, int areaCode, int contentTypeId){
+  private URI makeRequestURL(int page)  {
     String url = getServiceUrl() + ApiLink.GET_ATTRACTION.getSufixUrl();
     String[] requiredQueryParams = ApiLink.GET_ATTRACTION.getRequiredParams()
         .toArray(new String[0]);
 
-    UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(url)
-        .queryParam(requiredQueryParams[0], super.getApiKeys())
-        .queryParam(requiredQueryParams[1], "AppTest")
-        .queryParam(requiredQueryParams[2], "ETC")
-        .queryParam(requiredQueryParams[3], areaCode)
-        .queryParam("_type", "json")
-        .queryParam("pageNo", page)
-        .queryParam("numOfRows", TourApiProvider.DEFAULT_PAGE_SIZE)
-        .queryParam("contentTypeId", contentTypeId);
+    Map<String, String> queryParams = new HashMap<>();
+    queryParams.put(requiredQueryParams[0], super.getApiKeys());
+    queryParams.put(requiredQueryParams[1], "AppTest");
+    queryParams.put(requiredQueryParams[2], "ETC");
+    queryParams.put("_type", "json");
+    queryParams.put("pageNo", Integer.toString(page));
+    queryParams.put("numOfRows", Integer.toString(TourApiProvider.DEFAULT_PAGE_SIZE));
+    queryParams.put("contentTypeId", "76");
 
-    return  URLDecoder.decode(urlBuilder.toUriString(), StandardCharsets.UTF_8);
+    UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(url);
+
+    for (Map.Entry<String, String> entry : queryParams.entrySet()) {
+      urlBuilder.queryParam(entry.getKey(), entry.getValue());
+    }
+
+    try {
+      URI builtUri = new URI(urlBuilder.build(false).toUriString());
+      return  builtUri;
+    }catch(URISyntaxException e) {
+      throw new ApiResponseException("URI NOT FOUND");
+    }
   }
 
-  protected ResponseEntity<String> callTourApi(String requestUrl) {
+  protected ResponseEntity<String> callTourApi(URI requestUrl) {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");

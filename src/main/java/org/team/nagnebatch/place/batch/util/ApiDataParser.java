@@ -44,7 +44,7 @@ public class ApiDataParser {
       }
 
       totalCount = rootNode.path("response").path("body").path("totalCount").asInt();
-      isNextPage = totalCount > TourApiProvider.DEFAULT_PAGE_SIZE * page + attractions.size();
+      isNextPage = totalCount > TourApiProvider.DEFAULT_PAGE_SIZE * (page - 1) + attractions.size();
 
       return new ResponseAttraction(attractions, totalCount, isNextPage);
     } catch (Exception e) {

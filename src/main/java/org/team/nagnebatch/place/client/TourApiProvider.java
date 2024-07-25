@@ -13,7 +13,7 @@ public class TourApiProvider implements ApiConfiguration {
   private final String API_VERSION = "4.0";
   public static final String ENG_SERVICE_URL = "http://apis.data.go.kr/B551011/EngService1";
   public static final String KOR_SERVICE_URL = "";
-  public static final int DEFAULT_PAGE_SIZE = 500;
+  public static final int DEFAULT_PAGE_SIZE = 5000;
 
   //TODO 훗날에 LogService 따로 추가할 예정. 그래서 Provider로 분리함.
 
