@@ -31,9 +31,9 @@ public class RestaurantReader {
             .build();
   }
 
-  public MultiResourceItemReader<Restaurant> multiResourceItemReader() throws IOException {
+  public MultiResourceItemReader<Restaurant> multiResourceItemReader(String resourcePattern) throws IOException {
     ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-    Resource[] resources = resolver.getResources("classpath*:*.csv");
+    Resource[] resources = resolver.getResources(resourcePattern);
 
     for (Resource resource : resources) {
       log.info("Reading CSV file: " + resource.getFilename());

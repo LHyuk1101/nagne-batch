@@ -7,15 +7,17 @@ import org.team.nagnebatch.place.domain.Place;
 import org.team.nagnebatch.place.domain.Store;
 
 @Component
-public class RestaurantProcessor implements ItemProcessor<Restaurant, CompositeData> {
+public class RestaurantProcessorForRestaurant implements ItemProcessor<Restaurant, CompositeData> {
+  private static final int CONTENT_TYPE_ID = 82;
+
   @Override
   public CompositeData process(Restaurant restaurant) throws Exception {
     Place place = new Place(
-      null,
+            null,
             restaurant.getAddress(),
             null,
             (int) (Math.random() * 1000),
-            (int) (Math.random() * 1000),
+            CONTENT_TYPE_ID,
             restaurant.getLatitude(),
             restaurant.getLongitude()
     );
