@@ -1,16 +1,22 @@
 package org.team.nagnebatch.place.client.config;
 
 public enum ApiInfo {
-  ENG_SERVICE("ENG"),
-  KOR_SERVICE("KOR");
 
-  private String apiInfo;
+  AttractContentTypeId(67, "관광지"),
+  FestivalContentTypeId(85, "축제"),
+  StayContentTypeId(80, "숙박");
 
-  private ApiInfo(String apiInfo) {}
 
-  public String getApiInfo() {
-    return apiInfo;
+  private int contentTypeId;
+
+  private String contentTypeName;
+  private ApiInfo(int apiInfo, String contentTypeName) {}
+
+  public int getContentTypeId() {
+    return contentTypeId;
   }
 
-
+  public String getContentTypeName() {
+    return contentTypeName;
+  }
 }

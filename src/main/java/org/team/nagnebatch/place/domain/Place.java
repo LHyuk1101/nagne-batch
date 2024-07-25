@@ -16,7 +16,7 @@ public class Place {
 
   private String address1;
 
-  private String address2;
+  private String title;
 
   private int contentId;
 
@@ -31,11 +31,21 @@ public class Place {
 
   protected Place() {}
 
-  public Place(Long id, String address1, String address2, int contentId, int contentTypeId,
+  public Place(String address1, String title, int contentId, int contentTypeId,
+      double latitude, double longitude) {
+    this.address1 = address1;
+    this.title = title;
+    this.contentId = contentId;
+    this.contentTypeId = contentTypeId;
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
+
+  public Place(Long id, String address1, String title, int contentId, int contentTypeId,
       double latitude, double longitude) {
     this.id = id;
     this.address1 = address1;
-    this.address2 = address2;
+    this.title = title;
     this.contentId = contentId;
     this.contentTypeId = contentTypeId;
     this.latitude = latitude;
@@ -50,8 +60,8 @@ public class Place {
     return address1;
   }
 
-  public String getAddress2() {
-    return address2;
+  public String getTitle() {
+    return title;
   }
 
   public int getContentId() {

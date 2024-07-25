@@ -1,6 +1,7 @@
 package org.team.nagnebatch.place.batch.createPlace;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.NonTransientResourceException;
@@ -8,43 +9,44 @@ import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.team.nagnebatch.place.batch.service.TourApiEngService;
 import org.team.nagnebatch.place.client.TourApiProvider;
-import org.team.nagnebatch.place.domain.requestAttraction.RequestAttractionDTO;
+import org.team.nagnebatch.place.domain.requestAttraction.AttractionDTO;
 import org.team.nagnebatch.place.domain.requestAttraction.ResponseAttraction;
 
-public class PlaceItemReader extends TourApiProvider implements ItemReader<RequestAttractionDTO> {
+public class AttractionItemReader extends TourApiProvider implements ItemReader<AttractionDTO> {
 
   private final TourApiEngService tourApiEngService;
+  private Iterator<AttractionDTO> attractionIterator;
 
-  public PlaceItemReader(TourApiEngService engService) {
+  public AttractionItemReader(TourApiEngService engService) {
     this.tourApiEngService = engService;
   }
 
   @Override
-  public RequestAttractionDTO read()
+  public AttractionDTO read()
       throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {
 
-    int areaCode = 1 ;
-    int contentTypeId = 76;
-    List<ResponseAttraction> datas = loopFetchData(areaCode, contentTypeId);
-    if(datas.size() > 0) {
-
+    if (attractionIterator == null) {
+      loadAttractions();
     }
-    return null;
+    if (attractionIterator.hasNext()) {
+      return attractionIterator.next();
+    } else {
+      return null;
+    }
   }
-
-  public List<ResponseAttraction> loopFetchData(int areaCode, int contentTypeId){
-    List<ResponseAttraction> list = new ArrayList<>();
+  public void loadAttractions(){
+    List<AttractionDTO> mergeList = new ArrayList<>();
     int page = 1;
     while(true){
-      ResponseAttraction attractions1 = tourApiEngService.getLocationBased(page, areaCode, contentTypeId);
+      ResponseAttraction attractions1 = tourApiEngService.getLocationBased(page);
       if(!attractions1.getAttractions().isEmpty()){
-        list.add(attractions1);
+        mergeList.addAll(attractions1.getAttractions());
         page++;
       }
       if(!attractions1.isNextPage()){
         break;
       }
     }
-    return list;
+    this.attractionIterator = mergeList.iterator();
   }
 }
