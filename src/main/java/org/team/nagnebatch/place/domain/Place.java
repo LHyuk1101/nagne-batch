@@ -1,8 +1,6 @@
 package org.team.nagnebatch.place.domain;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,7 +12,7 @@ public class Place {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  private String address1;
+  private String address;
 
   private String title;
 
@@ -31,9 +29,9 @@ public class Place {
 
   protected Place() {}
 
-  public Place(String address1, String title, int contentId, int contentTypeId,
-      double latitude, double longitude) {
-    this.address1 = address1;
+  public Place(String address, String title, int contentId, int contentTypeId,
+               double latitude, double longitude) {
+    this.address = address;
     this.title = title;
     this.contentId = contentId;
     this.contentTypeId = contentTypeId;
@@ -41,23 +39,51 @@ public class Place {
     this.longitude = longitude;
   }
 
-  public Place(Long id, String address1, String title, int contentId, int contentTypeId,
-      double latitude, double longitude) {
+  public Place(Long id, String address, String title, int contentId, int contentTypeId,
+               double latitude, double longitude) {
     this.id = id;
-    this.address1 = address1;
+    this.address = address;
     this.title = title;
     this.contentId = contentId;
     this.contentTypeId = contentTypeId;
     this.latitude = latitude;
     this.longitude = longitude;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public void setLongitude(double longitude) {
+    this.longitude = longitude;
+  }
+
+  public void setLatitude(double latitude) {
+    this.latitude = latitude;
+  }
+
+  public void setContentTypeId(int contentTypeId) {
+    this.contentTypeId = contentTypeId;
+  }
+
+  public void setContentId(int contentId) {
+    this.contentId = contentId;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  public void setAddress(String address1) {
+    this.address = address1;
   }
 
   public Long getId() {
     return id;
   }
 
-  public String getAddress1() {
-    return address1;
+  public String getAddress() {
+    return address;
   }
 
   public String getTitle() {

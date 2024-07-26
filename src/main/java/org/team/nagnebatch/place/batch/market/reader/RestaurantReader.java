@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
-import org.team.nagnebatch.place.batch.market.domain.Restaurant;
+import org.team.nagnebatch.place.batch.market.domain.CsvData;
 
 import java.io.IOException;
 
@@ -19,19 +19,19 @@ public class RestaurantReader {
 
   private static final Logger log = LoggerFactory.getLogger(RestaurantReader.class);
 
-  public FlatFileItemReader<Restaurant> delegateReader() {
-    return new FlatFileItemReaderBuilder<Restaurant>()
-            .name("restaurantItemReader")
+  public FlatFileItemReader<CsvData> delegateReader() {
+    return new FlatFileItemReaderBuilder<CsvData>()
+            .name("csvDataItemReader")
             .delimited()
-            .names("index", "name", "address", "phone_number", "average_rating", "latitude", "longitude", "business_hours")
+            .names("areatype", "index", "name", "address", "phone_number", "average_rating", "latitude", "longitude", "business_hours")
             .linesToSkip(1)
-            .fieldSetMapper(new BeanWrapperFieldSetMapper<Restaurant>() {{
-              setTargetType(Restaurant.class);
+            .fieldSetMapper(new BeanWrapperFieldSetMapper<CsvData>() {{
+              setTargetType(CsvData.class);
             }})
             .build();
   }
 
-  public MultiResourceItemReader<Restaurant> multiResourceItemReader(String resourcePattern) throws IOException {
+  public MultiResourceItemReader<CsvData> multiResourceItemReader(String resourcePattern) throws IOException {
     ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
     Resource[] resources = resolver.getResources(resourcePattern);
 
@@ -39,7 +39,7 @@ public class RestaurantReader {
       log.info("Reading CSV file: " + resource.getFilename());
     }
 
-    MultiResourceItemReader<Restaurant> resourceItemReader = new MultiResourceItemReader<>();
+    MultiResourceItemReader<CsvData> resourceItemReader = new MultiResourceItemReader<>();
     resourceItemReader.setResources(resources);
     resourceItemReader.setDelegate(delegateReader());
 
