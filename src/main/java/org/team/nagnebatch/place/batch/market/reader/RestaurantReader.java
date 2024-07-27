@@ -23,7 +23,7 @@ public class RestaurantReader {
     return new FlatFileItemReaderBuilder<CsvData>()
             .name("csvDataItemReader")
             .delimited()
-            .names("areatype", "index", "name", "address", "phone_number", "average_rating", "latitude", "longitude", "business_hours")
+            .names("areatype", "index", "name", "address", "phone_number", "average_rating", "latitude", "longitude", "business_hours", "image_url")
             .linesToSkip(1)
             .fieldSetMapper(new BeanWrapperFieldSetMapper<CsvData>() {{
               setTargetType(CsvData.class);

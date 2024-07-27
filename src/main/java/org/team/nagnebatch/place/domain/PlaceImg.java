@@ -1,11 +1,6 @@
 package org.team.nagnebatch.place.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class PlaceImg {
@@ -17,6 +12,7 @@ public class PlaceImg {
   @ManyToOne(fetch = FetchType.LAZY)
   private Place place;
 
+  @Column(length = 500)
   private String imgUrl;
 
   public Long getId() {
@@ -25,6 +21,10 @@ public class PlaceImg {
 
   public Place getPlace() {
     return place;
+  }
+
+  public void setImgUrl(String imgUrl) {
+    this.imgUrl = imgUrl;
   }
 
   public String getImgUrl() {

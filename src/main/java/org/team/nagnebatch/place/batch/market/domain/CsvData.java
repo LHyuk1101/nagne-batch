@@ -10,6 +10,15 @@ public class CsvData {
   private Double latitude;
   private Double longitude;
   private String businessHours;
+  private String imageUrl;
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
 
   // Getters and Setters
   public String getAreatype() {

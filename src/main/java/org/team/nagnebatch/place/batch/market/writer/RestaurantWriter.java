@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.team.nagnebatch.place.batch.market.processor.PlaceAndStore;
 import org.team.nagnebatch.place.batch.market.repository.StoreRepository;
+import org.team.nagnebatch.place.batch.repository.PlaceImgRepository;
 import org.team.nagnebatch.place.batch.repository.PlaceRepository;
 
 import java.util.Collections;
@@ -21,11 +22,13 @@ public class RestaurantWriter {
 
   private final PlaceRepository placeRepository;
   private final StoreRepository storeRepository;
+  private final PlaceImgRepository placeImgRepository;
 
   @Autowired
-  public RestaurantWriter(PlaceRepository placeRepository, StoreRepository storeRepository) {
+  public RestaurantWriter(PlaceRepository placeRepository, StoreRepository storeRepository, PlaceImgRepository placeImgRepository) {
     this.placeRepository = placeRepository;
     this.storeRepository = storeRepository;
+    this.placeImgRepository = placeImgRepository;
   }
 
   @Bean
@@ -36,6 +39,7 @@ public class RestaurantWriter {
         for (PlaceAndStore placeAndStore : chunk) {
           placeRepository.save(placeAndStore.getPlace());
           storeRepository.save(placeAndStore.getStore());
+          placeImgRepository.save(placeAndStore.getPlaceImg());
         }
         log.info("Writing {} records to the database", chunk.size());
       }

@@ -1,9 +1,9 @@
 package org.team.nagnebatch.place.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import org.team.nagnebatch.place.batch.market.domain.Area;
+
+import java.util.List;
 
 @Entity
 public class Place {
@@ -26,6 +26,9 @@ public class Place {
 
 //  @Enumerated(EnumType.STRING)
 //  private ApiType apiType;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Area area;
 
   protected Place() {}
 

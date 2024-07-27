@@ -4,6 +4,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.stereotype.Component;
 import org.team.nagnebatch.place.batch.market.domain.CsvData;
 import org.team.nagnebatch.place.domain.Place;
+import org.team.nagnebatch.place.domain.PlaceImg;
 import org.team.nagnebatch.place.domain.Store;
 
 @Component
@@ -27,6 +28,12 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
             data.getBusinessHours(),
             data.getPhoneNumber()
     );
-    return new PlaceAndStore(place, store);
+
+    PlaceImg placeImg = new PlaceImg(
+            place,
+            data.getImageUrl()
+    );
+
+    return new PlaceAndStore(place, store, placeImg);
   }
 }
