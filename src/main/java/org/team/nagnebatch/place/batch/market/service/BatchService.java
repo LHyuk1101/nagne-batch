@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.team.nagnebatch.place.batch.market.entity.BatchExecutionLog;
 import org.team.nagnebatch.place.batch.market.repository.BatchExecutionLogRepository;
-import org.team.nagnebatch.place.batch.service.AreaService;
 
 import java.time.LocalDateTime;
 
@@ -28,7 +27,7 @@ public class BatchService {
     this.batchExecutionLogRepository = repository;
   }
 
-  private void saveAreaData() {
+  public void saveAreaData() {
     try {
       log.info("AREA 데이터 삽입");
       areaService.saveAreaData();

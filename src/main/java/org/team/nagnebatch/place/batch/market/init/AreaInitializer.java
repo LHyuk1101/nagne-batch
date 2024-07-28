@@ -3,8 +3,6 @@ package org.team.nagnebatch.place.batch.market.init;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.stereotype.Component;
 import org.team.nagnebatch.place.batch.market.domain.Area;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.domain.AreaType;
