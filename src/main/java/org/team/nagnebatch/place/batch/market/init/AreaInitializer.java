@@ -2,6 +2,9 @@ package org.team.nagnebatch.place.batch.market.init;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 import org.team.nagnebatch.place.batch.market.domain.Area;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.domain.AreaType;
@@ -9,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+/**
+ * 이게 돌아는 가는데 왜 저장이 안될까.....
+ * */
 
 @Component
 public class AreaInitializer implements CommandLineRunner {
@@ -32,3 +38,4 @@ public class AreaInitializer implements CommandLineRunner {
     log.info("Found " + all.size() + " Areas");
   }
 }
+

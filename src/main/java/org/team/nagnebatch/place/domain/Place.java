@@ -42,6 +42,16 @@ public class Place {
     this.longitude = longitude;
   }
 
+  public Place(String address, String title, int contentId, int contentTypeId, double latitude, double longitude, Area area) {
+    this.address = address;
+    this.title = title;
+    this.contentId = contentId;
+    this.contentTypeId = contentTypeId;
+    this.latitude = latitude;
+    this.longitude = longitude;
+    this.area = area;
+  }
+
   public Place(Long id, String address, String title, int contentId, int contentTypeId,
                double latitude, double longitude) {
     this.id = id;
