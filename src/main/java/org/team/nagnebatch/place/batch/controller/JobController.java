@@ -9,9 +9,9 @@ import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.team.nagnebatch.place.batch.service.BatchService;
 
 import java.time.LocalDateTime;
+import org.team.nagnebatch.place.batch.market.service.BatchService;
 
 @RestController
 public class JobController {
