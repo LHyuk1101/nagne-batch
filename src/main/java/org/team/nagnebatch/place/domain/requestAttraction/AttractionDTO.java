@@ -4,7 +4,7 @@ public class AttractionDTO {
 
   private String addr1;
 
-  private int contentId;
+  private String contentId;
 
   private Long contentTypeId;
 
@@ -26,7 +26,7 @@ public class AttractionDTO {
     return addr1;
   }
 
-  public int getContentId() {
+  public String getContentId() {
     return contentId;
   }
 
@@ -63,7 +63,7 @@ public class AttractionDTO {
   }
   public static class Builder {
     private String addr1;
-    private int contentId;
+    private String contentId;
     private Long contentTypeId;
     private String firstImage;
     private String firstImage2;
@@ -78,7 +78,7 @@ public class AttractionDTO {
       return this;
     }
 
-    public Builder contentId(int contentId) {
+    public Builder contentId(String contentId) {
       this.contentId = contentId;
       return this;
     }

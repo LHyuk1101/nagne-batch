@@ -12,7 +12,7 @@ public class Store {
   @ManyToOne(fetch = FetchType.LAZY)
   private Place place;
 
-  @Column(length = 500)
+  @Column(length = 1000)
   private String openTime;
 
   private String contact;

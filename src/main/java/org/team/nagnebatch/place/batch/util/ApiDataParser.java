@@ -28,7 +28,7 @@ public class ApiDataParser {
         for (JsonNode itemNode : itemsNode) {
           AttractionDTO attraction = AttractionDTO.builder()
               .addr1(itemNode.path("addr1").asText())
-              .contentId(Integer.parseInt(itemNode.path("contentid").asText()))
+              .contentId(itemNode.path("contentid").asText())
               .contentTypeId(Long.parseLong(itemNode.path("contenttypeid").asText()))
               .firstImage(itemNode.path("firstimage").asText())
               .firstImage2(itemNode.path("firstimage2").asText())

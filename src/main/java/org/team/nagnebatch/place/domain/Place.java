@@ -1,9 +1,13 @@
 package org.team.nagnebatch.place.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import org.team.nagnebatch.place.batch.market.domain.Area;
-
-import java.util.List;
 
 @Entity
 public class Place {
@@ -16,7 +20,8 @@ public class Place {
 
   private String title;
 
-  private int contentId;
+  @Column(unique = true)
+  private String contentId;
 
   private int contentTypeId;
 
@@ -32,7 +37,7 @@ public class Place {
 
   protected Place() {}
 
-  public Place(String address, String title, int contentId, int contentTypeId,
+  public Place(String address, String title, String contentId, int contentTypeId,
                double latitude, double longitude) {
     this.address = address;
     this.title = title;
@@ -42,7 +47,7 @@ public class Place {
     this.longitude = longitude;
   }
 
-  public Place(String address, String title, int contentId, int contentTypeId, double latitude, double longitude, Area area) {
+  public Place(String address, String title, String contentId, int contentTypeId, double latitude, double longitude, Area area) {
     this.address = address;
     this.title = title;
     this.contentId = contentId;
@@ -52,7 +57,7 @@ public class Place {
     this.area = area;
   }
 
-  public Place(Long id, String address, String title, int contentId, int contentTypeId,
+  public Place(Long id, String address, String title, String contentId, int contentTypeId,
                double latitude, double longitude) {
     this.id = id;
     this.address = address;
@@ -79,7 +84,7 @@ public class Place {
     this.contentTypeId = contentTypeId;
   }
 
-  public void setContentId(int contentId) {
+  public void setContentId(String contentId) {
     this.contentId = contentId;
   }
 
@@ -103,7 +108,7 @@ public class Place {
     return title;
   }
 
-  public int getContentId() {
+  public String getContentId() {
     return contentId;
   }
 

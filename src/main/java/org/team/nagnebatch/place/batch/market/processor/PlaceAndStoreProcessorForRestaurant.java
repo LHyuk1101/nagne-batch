@@ -9,10 +9,13 @@ import org.team.nagnebatch.place.domain.Place;
 import org.team.nagnebatch.place.domain.PlaceImg;
 import org.team.nagnebatch.place.domain.Store;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
 public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvData, PlaceAndStore> {
   private static final int CONTENT_TYPE_ID = 82;
-
+  private static final Set<Integer> usedIds = new HashSet<>();
   private final AreaRepository areaRepository;
 
   public PlaceAndStoreProcessorForRestaurant(AreaRepository areaRepository) {
@@ -23,10 +26,18 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
   public PlaceAndStore process(CsvData data) throws Exception {
     Area area = areaRepository.findById(Integer.parseInt(data.getAreatype())).orElseThrow(() -> new IllegalArgumentException("Invalid area code: " + data.getAreatype()));
 
+    int uniqueId;
+    do {
+      uniqueId = (int) (Math.random() * 1000000);
+    } while (usedIds.contains(uniqueId));
+    usedIds.add(uniqueId);
+
+    String formattedId = String.format("%07d", uniqueId);
+
     Place place = new Place(
             data.getAddress(),
             data.getName(),
-            (int) (Math.random() * 1000),
+            formattedId,
             CONTENT_TYPE_ID,
             data.getLatitude(),
             data.getLongitude(),
