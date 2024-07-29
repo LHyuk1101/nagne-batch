@@ -20,6 +20,7 @@ import org.team.nagnebatch.place.batch.market.writer.RestaurantWriter;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 
 import java.io.IOException;
+import org.team.nagnebatch.place.batch.repository.PlaceRepository;
 
 @Configuration
 @EnableBatchProcessing
@@ -28,15 +29,18 @@ public class MarketBatchConfiguration {
   private final RestaurantReader restaurantReader;
   private final RestaurantWriter restaurantWriter;
   private final AreaRepository areaRepository;
+  private final PlaceRepository placeRepository;
 
   @Autowired
   public MarketBatchConfiguration(
           RestaurantReader restaurantReader,
           RestaurantWriter restaurantWriter,
-          AreaRepository areaRepository) {
+          AreaRepository areaRepository,
+          PlaceRepository placeRepository) {
     this.restaurantReader = restaurantReader;
     this.restaurantWriter = restaurantWriter;
     this.areaRepository = areaRepository;
+    this.placeRepository = placeRepository;
   }
 
   @Bean
@@ -52,7 +56,7 @@ public class MarketBatchConfiguration {
     return new StepBuilder("restaurantStep", jobRepository)
             .<CsvData, PlaceAndStore>chunk(10, transactionManager)
             .reader(restaurantReader.multiResourceItemReader("classpath:restaurant/*.csv"))
-            .processor(new PlaceAndStoreProcessorForRestaurant(areaRepository))
+            .processor(new PlaceAndStoreProcessorForRestaurant(areaRepository,placeRepository))
             .writer(restaurantWriter.compositeItemWriter())
             .build();
   }
@@ -62,7 +66,7 @@ public class MarketBatchConfiguration {
     return new StepBuilder("lodgingStep", jobRepository)
             .<CsvData, PlaceAndStore>chunk(10, transactionManager)
             .reader(restaurantReader.multiResourceItemReader("classpath:lodging/*.csv"))
-            .processor(new PlaceAndStoreProcessorForLodging(areaRepository))
+            .processor(new PlaceAndStoreProcessorForLodging(areaRepository,placeRepository))
             .writer(restaurantWriter.compositeItemWriter())
             .build();
   }

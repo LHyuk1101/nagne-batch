@@ -1,59 +1,62 @@
 package org.team.nagnebatch.place.batch.market.processor;
 
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.team.nagnebatch.place.batch.market.domain.Area;
 import org.team.nagnebatch.place.batch.market.domain.CsvData;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.domain.Place;
 import org.team.nagnebatch.place.domain.PlaceImg;
 import org.team.nagnebatch.place.domain.Store;
+import org.team.nagnebatch.place.batch.repository.PlaceRepository;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Component
 public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvData, PlaceAndStore> {
   private static final int CONTENT_TYPE_ID = 82;
-  private static final Set<Integer> usedIds = new HashSet<>();
   private final AreaRepository areaRepository;
+  private final PlaceRepository placeRepository;
 
-  public PlaceAndStoreProcessorForRestaurant(AreaRepository areaRepository) {
+  @Autowired
+  public PlaceAndStoreProcessorForRestaurant(AreaRepository areaRepository, PlaceRepository placeRepository) {
     this.areaRepository = areaRepository;
+    this.placeRepository = placeRepository;
   }
 
   @Override
+  @Transactional
   public PlaceAndStore process(CsvData data) throws Exception {
-    Area area = areaRepository.findById(Integer.parseInt(data.getAreatype())).orElseThrow(() -> new IllegalArgumentException("Invalid area code: " + data.getAreatype()));
+    Area area = areaRepository.findById(Integer.parseInt(data.getAreatype()))
+        .orElseThrow(() -> new IllegalArgumentException("Invalid area code: " + data.getAreatype()));
 
-    int uniqueId;
+    String uniqueId;
     do {
-      uniqueId = (int) (Math.random() * 1000000);
-    } while (usedIds.contains(uniqueId));
-    usedIds.add(uniqueId);
-
-    String formattedId = String.format("%07d", uniqueId);
+      uniqueId = String.format("%07d", ThreadLocalRandom.current().nextInt(1000000));
+    } while (placeRepository.existsByContentId(uniqueId));
 
     Place place = new Place(
-            data.getAddress(),
-            data.getName(),
-            formattedId,
-            CONTENT_TYPE_ID,
-            data.getLatitude(),
-            data.getLongitude(),
-            area
+        data.getAddress(),
+        data.getName(),
+        uniqueId,
+        CONTENT_TYPE_ID,
+        data.getLatitude(),
+        data.getLongitude(),
+        area
     );
 
     Store store = new Store(
-            null,
-            place,
-            data.getBusinessHours(),
-            data.getPhoneNumber()
+        null,
+        place,
+        data.getBusinessHours(),
+        data.getPhoneNumber()
     );
 
     PlaceImg placeImg = new PlaceImg(
-            place,
-            data.getImageUrl()
+        place,
+        data.getImageUrl()
     );
 
     return new PlaceAndStore(place, store, placeImg);
