@@ -28,12 +28,12 @@ public class AreaInitializer implements CommandLineRunner {
   public void run(String... args) throws Exception {
     for (AreaType areaType : AreaType.values()) {
       Area area = new Area(areaType.getAreaCode(), areaType.getName());
-      log.info("Saving Area: " + areaType.getName() + " (" + areaType.getAreaCode() + ")");
+      log.info("데이터 삽입 : " + areaType.getName() + " (" + areaType.getAreaCode() + ")");
       areaRepository.save(area);
       log.info(area.getAreaCode() + areaType.getName() + " saved");
     }
     List<Area> all = areaRepository.findAll();
-    log.info("Found " + all.size() + " Areas");
+    log.info("저장된 데이터 개수 : " + all.size());
   }
 }
 

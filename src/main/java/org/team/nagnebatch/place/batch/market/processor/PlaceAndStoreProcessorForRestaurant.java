@@ -30,7 +30,7 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
   @Transactional
   public PlaceAndStore process(CsvData data) throws Exception {
     Area area = areaRepository.findById(Integer.parseInt(data.getAreatype()))
-        .orElseThrow(() -> new IllegalArgumentException("Invalid area code: " + data.getAreatype()));
+        .orElseThrow(() -> new IllegalArgumentException("AREA 코드 잘못됨 : " + data.getAreatype()));
 
     String uniqueId;
     do {

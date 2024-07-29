@@ -41,7 +41,7 @@ public class RestaurantWriter {
           storeRepository.save(placeAndStore.getStore());
           placeImgRepository.save(placeAndStore.getPlaceImg());
         }
-        log.info("Writing {} records to the database", chunk.size());
+        log.info("디비에 {}건의 데이터가 추가 됨.", chunk.size());
       }
     };
   }
