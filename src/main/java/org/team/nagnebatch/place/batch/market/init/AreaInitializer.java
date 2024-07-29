@@ -29,7 +29,9 @@ public class AreaInitializer implements CommandLineRunner {
     for (AreaType areaType : AreaType.values()) {
       Area area = new Area(areaType.getAreaCode(), areaType.getName());
       log.info("데이터 삽입 : " + areaType.getName() + " (" + areaType.getAreaCode() + ")");
-      areaRepository.save(area);
+
+      Area savedArea = areaRepository.save(area);
+      log.info(savedArea.toString());
       log.info(area.getAreaCode() + areaType.getName() + " saved");
     }
     List<Area> all = areaRepository.findAll();
