@@ -1,5 +1,6 @@
 package org.team.nagnebatch.place.batch.service;
 
+import java.util.Objects;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.batch.core.Job;
@@ -46,7 +47,7 @@ public class BatchService {
         .toList();
 
     boolean jobCompletedToday = jobExecutions.stream()
-        .anyMatch(jobExecution -> jobExecution.getStartTime().isAfter(startOfDay) &&
+        .anyMatch(jobExecution -> Objects.requireNonNull(jobExecution.getStartTime()).isAfter(startOfDay) &&
             jobExecution.getStartTime().isBefore(endOfDay) &&
             jobExecution.getExitStatus().getExitCode().equals("COMPLETED"));
 
