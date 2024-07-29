@@ -1,25 +1,25 @@
 package org.team.nagnebatch.place.batch.market.config;
 
+import java.io.IOException;
+import javax.sql.DataSource;
 import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
-import org.springframework.batch.support.transaction.ResourcelessTransactionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.team.nagnebatch.place.batch.market.domain.CsvData;
 import org.team.nagnebatch.place.batch.market.processor.PlaceAndStore;
-import org.team.nagnebatch.place.batch.market.processor.PlaceAndStoreProcessorForRestaurant;
 import org.team.nagnebatch.place.batch.market.processor.PlaceAndStoreProcessorForLodging;
+import org.team.nagnebatch.place.batch.market.processor.PlaceAndStoreProcessorForRestaurant;
 import org.team.nagnebatch.place.batch.market.reader.RestaurantReader;
 import org.team.nagnebatch.place.batch.market.writer.RestaurantWriter;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
-
-import java.io.IOException;
 import org.team.nagnebatch.place.batch.repository.PlaceRepository;
 
 @Configuration
@@ -30,17 +30,20 @@ public class MarketBatchConfiguration {
   private final RestaurantWriter restaurantWriter;
   private final AreaRepository areaRepository;
   private final PlaceRepository placeRepository;
+  private final DataSource dataSource;
 
   @Autowired
   public MarketBatchConfiguration(
           RestaurantReader restaurantReader,
           RestaurantWriter restaurantWriter,
           AreaRepository areaRepository,
-          PlaceRepository placeRepository) {
+          PlaceRepository placeRepository,
+          DataSource dataSource) {
     this.restaurantReader = restaurantReader;
     this.restaurantWriter = restaurantWriter;
     this.areaRepository = areaRepository;
     this.placeRepository = placeRepository;
+    this.dataSource = dataSource;
   }
 
   @Bean
@@ -73,6 +76,6 @@ public class MarketBatchConfiguration {
 
   @Bean
   public PlatformTransactionManager transactionManager() {
-    return new ResourcelessTransactionManager();
+    return new DataSourceTransactionManager(dataSource);
   }
 }
