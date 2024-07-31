@@ -29,6 +29,11 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
   @Override
   @Transactional
   public PlaceAndStore process(CsvData data) throws Exception {
+
+    if(data.getImageUrl() != null && data.getImageUrl().contains("proxy")){
+      return null;
+    }
+
     Area area = areaRepository.findById(Integer.parseInt(data.getAreatype()))
         .orElseThrow(() -> new IllegalArgumentException("AREA 코드 잘못됨 : " + data.getAreatype()));
 
