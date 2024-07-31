@@ -11,6 +11,8 @@ spring:
   h2:
     console:
       enabled: true
+  jpa:
+    show-sql: true
 
 spring.batch.jdbc.initialize-schema: always
 

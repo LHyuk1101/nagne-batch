@@ -1,7 +1,6 @@
-package org.team.nagnebatch.place.domain.requestAttraction;
+package org.team.nagnebatch.place.domain.requestFestival;
 
-public class AttractionDTO {
-
+public class FestivalDTO {
   private String addr1;
 
   private String contentId;
@@ -21,6 +20,12 @@ public class AttractionDTO {
   private String title;
 
   private String areaCode;
+
+  private String createdTime;
+
+  private String eventStartDate;
+
+  private String eventEndDate;
 
   public String getAddr1() {
     return addr1;
@@ -61,6 +66,20 @@ public class AttractionDTO {
   public String getAreaCode() {
     return areaCode;
   }
+
+  public String getCreatedTime() {
+    return createdTime;
+  }
+
+  public String getEventStartDate() {
+    return eventStartDate;
+  }
+
+  public String getEventEndDate() {
+    return eventEndDate;
+  }
+
+  // Builder 클래스
   public static class Builder {
     private String addr1;
     private String contentId;
@@ -72,6 +91,9 @@ public class AttractionDTO {
     private String tel;
     private String title;
     private String areaCode;
+    private String createdTime;
+    private String eventStartDate;
+    private String eventEndDate;
 
     public Builder addr1(String addr1) {
       this.addr1 = addr1;
@@ -123,8 +145,23 @@ public class AttractionDTO {
       return this;
     }
 
-    public AttractionDTO build() {
-      AttractionDTO dto = new AttractionDTO();
+    public Builder createdTime(String createdTime) {
+      this.createdTime = createdTime;
+      return this;
+    }
+
+    public Builder eventStartDate(String eventStartDate) {
+      this.eventStartDate = eventStartDate;
+      return this;
+    }
+
+    public Builder eventEndDate(String eventEndDate) {
+      this.eventEndDate = eventEndDate;
+      return this;
+    }
+
+    public FestivalDTO build() {
+      FestivalDTO dto = new FestivalDTO();
       dto.addr1 = this.addr1;
       dto.contentId = this.contentId;
       dto.contentTypeId = this.contentTypeId;
@@ -135,6 +172,9 @@ public class AttractionDTO {
       dto.tel = this.tel;
       dto.title = this.title;
       dto.areaCode = this.areaCode;
+      dto.createdTime = this.createdTime;
+      dto.eventStartDate = this.eventStartDate;
+      dto.eventEndDate = this.eventEndDate;
       return dto;
     }
   }

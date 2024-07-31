@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.batch.service.TourApiEngService;
 import org.team.nagnebatch.place.domain.PlaceWrapper;
 import org.team.nagnebatch.place.domain.requestAttraction.AttractionDTO;
+import org.team.nagnebatch.place.domain.requestFestival.FestivalDTO;
 
 @Configuration
 @EnableBatchProcessing
@@ -28,10 +30,15 @@ public class createPlaceBatchConfig {
   @Autowired
   private TourApiEngService tourApiEngService;
 
+  @Autowired
+  private AreaRepository areaRepository;
+
+
   @Bean
-  public Job createPlaceJob(JobRepository jobRepository, Step createAttreactionStep) {
+  public Job createPlaceJob(JobRepository jobRepository, Step createAttreactionStep, Step createFestivalStep) {
     return new JobBuilder("placeCreate", jobRepository)
         .start(createAttreactionStep)
+        .next(createFestivalStep)
         .build();
   }
 
@@ -48,19 +55,17 @@ public class createPlaceBatchConfig {
 
   @Bean
   public Step createFestivalStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) {
-    return new StepBuilder("AttractionCreateStep", jobRepository)
-        .<AttractionDTO, PlaceWrapper>chunk(20, transactionManager)
-        .reader(createAttractionItemReader())
-        .processor(createAttractionItemProcessor())
-        .writer(createAttractionItemWriter())
+    return new StepBuilder("FestivalCreateStep", jobRepository)
+        .<FestivalDTO, PlaceWrapper>chunk(20, transactionManager)
+        .reader(createFestivalItemReader())
+        .processor(createFestivalItemProcessor())
+        .writer(createFestivalItemWriter())
         .build();
   }
 
-
-
   @Bean
   public ItemProcessor<AttractionDTO, PlaceWrapper> createAttractionItemProcessor() {
-    return new AttractionItemProcessor();
+    return new AttractionItemProcessor(areaRepository);
   }
 
   @Bean
@@ -72,6 +77,21 @@ public class createPlaceBatchConfig {
   public ItemWriter<PlaceWrapper> createAttractionItemWriter() {
 
     return new AttractionItemWriter(entityManagerFactory);
+  }
+
+  @Bean
+  public ItemReader<FestivalDTO> createFestivalItemReader(){
+    return new FestivalItemReader(tourApiEngService);
+  }
+
+  @Bean
+  public ItemProcessor<FestivalDTO, PlaceWrapper> createFestivalItemProcessor() {
+    return new FestivalItemProcessor(areaRepository);
+  }
+
+  @Bean
+  public ItemWriter<PlaceWrapper> createFestivalItemWriter(){
+    return new FestivalItemWriter(entityManagerFactory);
   }
 
 }

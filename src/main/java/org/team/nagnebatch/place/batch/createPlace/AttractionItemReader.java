@@ -9,6 +9,7 @@ import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.team.nagnebatch.place.batch.service.TourApiEngService;
 import org.team.nagnebatch.place.client.TourApiProvider;
+import org.team.nagnebatch.place.client.config.ApiLink;
 import org.team.nagnebatch.place.domain.requestAttraction.AttractionDTO;
 import org.team.nagnebatch.place.domain.requestAttraction.ResponseAttraction;
 
@@ -34,13 +35,18 @@ public class AttractionItemReader extends TourApiProvider implements ItemReader<
       return null;
     }
   }
+
   public void loadAttractions(){
     List<AttractionDTO> mergeList = new ArrayList<>();
     int page = 1;
     while(true){
-      ResponseAttraction attractions1 = tourApiEngService.getLocationBased(page);
+      ResponseAttraction attractions1 = tourApiEngService.getLocationBased(ApiLink.GET_ATTRACTION, page);
       if(!attractions1.getAttractions().isEmpty()){
-        mergeList.addAll(attractions1.getAttractions());
+        List<AttractionDTO> filterAttractions = attractions1.getAttractions()
+            .stream()
+            .filter(fest -> fest.getAreaCode() != null && !fest.getAreaCode().isEmpty())
+            .toList();
+        mergeList.addAll(filterAttractions);
         page++;
       }
       if(!attractions1.isNextPage()){

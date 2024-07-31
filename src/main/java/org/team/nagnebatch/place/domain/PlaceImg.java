@@ -1,12 +1,7 @@
 package org.team.nagnebatch.place.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-
+import jakarta.persistence.*;
+// 1 은 원본, 2 는 썸네일
 @Entity
 public class PlaceImg {
 
@@ -17,6 +12,7 @@ public class PlaceImg {
   @ManyToOne(fetch = FetchType.LAZY)
   private Place place;
 
+  @Column(length = 500)
   private String imgUrl;
 
   public Long getId() {
@@ -27,8 +23,15 @@ public class PlaceImg {
     return place;
   }
 
+  public void setImgUrl(String imgUrl) {
+    this.imgUrl = imgUrl;
+  }
+
   public String getImgUrl() {
     return imgUrl;
+  }
+
+  public PlaceImg() {
   }
 
   public PlaceImg(Place place, String imgUrl) {

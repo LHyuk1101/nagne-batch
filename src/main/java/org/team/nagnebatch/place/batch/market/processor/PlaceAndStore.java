@@ -1,22 +1,18 @@
 package org.team.nagnebatch.place.batch.market.processor;
 
-import org.team.nagnebatch.place.batch.market.domain.Restaurant;
 import org.team.nagnebatch.place.domain.Place;
+import org.team.nagnebatch.place.domain.PlaceImg;
 import org.team.nagnebatch.place.domain.Store;
 
-public class CompositeData {
-  private final Restaurant restaurant;
+public class PlaceAndStore {
   private final Place place;
   private final Store store;
+  private final PlaceImg placeImg;
 
-  public CompositeData(Restaurant restaurant, Place place, Store store) {
-    this.restaurant = restaurant;
+  public PlaceAndStore(Place place, Store store, PlaceImg placeImg) {
     this.place = place;
     this.store = store;
-  }
-
-  public Restaurant getRestaurant() {
-    return restaurant;
+    this.placeImg = placeImg;
   }
 
   public Place getPlace() {
@@ -27,4 +23,7 @@ public class CompositeData {
     return store;
   }
 
+  public PlaceImg getPlaceImg() {
+    return placeImg;
+  }
 }

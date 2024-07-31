@@ -1,13 +1,7 @@
 package org.team.nagnebatch.place.batch.market.domain;
 
-import jakarta.persistence.*;
-
-@Entity
-public class Restaurant {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+public class CsvData {
+  private String areatype;
   private Long index;
   private String name;
   private String address;
@@ -15,17 +9,24 @@ public class Restaurant {
   private Double averageRating;
   private Double latitude;
   private Double longitude;
-
-  @Column(length = 500)
   private String businessHours;
+  private String imageUrl;
 
-  // Getters and Setters
-  public Long getId() {
-    return id;
+  public String getImageUrl() {
+    return imageUrl;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+  }
+
+  // Getters and Setters
+  public String getAreatype() {
+    return areatype;
+  }
+
+  public void setAreatype(String areatype) {
+    this.areatype = areatype;
   }
 
   public Long getIndex() {
@@ -36,20 +37,20 @@ public class Restaurant {
     this.index = index;
   }
 
-  public String getAddress() {
-    return address;
-  }
-
-  public void setAddress(String address) {
-    this.address = address;
-  }
-
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
   }
 
   public String getPhoneNumber() {
@@ -60,20 +61,20 @@ public class Restaurant {
     this.phoneNumber = phoneNumber;
   }
 
-  public Double getLatitude() {
-    return latitude;
-  }
-
-  public void setLatitude(Double latitude) {
-    this.latitude = latitude;
-  }
-
   public Double getAverageRating() {
     return averageRating;
   }
 
   public void setAverageRating(Double averageRating) {
     this.averageRating = averageRating;
+  }
+
+  public Double getLatitude() {
+    return latitude;
+  }
+
+  public void setLatitude(Double latitude) {
+    this.latitude = latitude;
   }
 
   public Double getLongitude() {
