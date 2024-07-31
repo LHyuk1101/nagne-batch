@@ -3,9 +3,10 @@ package org.team.nagnebatch.place.batch.market.domain;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import org.team.nagnebatch.place.domain.AreaType;
 
 @Entity
-@Table(name = "area")
+@Table(name = "areas")
 public class Area {
 
   @Id
@@ -13,6 +14,11 @@ public class Area {
   private String name;
 
   public Area() {
+  }
+
+  public Area(AreaType areaType){
+    this.areaCode = areaType.getAreaCode();
+    this.name = areaType.getName();
   }
 
   public Area(Integer areaCode, String name) {

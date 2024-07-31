@@ -1,12 +1,11 @@
 package org.team.nagnebatch.place.batch.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,12 +19,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 import org.team.nagnebatch.place.batch.util.ApiDataParser;
 import org.team.nagnebatch.place.client.TourApiProvider;
 import org.team.nagnebatch.place.client.config.ApiLink;
 import org.team.nagnebatch.place.domain.requestAttraction.ResponseAttraction;
+import org.team.nagnebatch.place.domain.requestFestival.ResponseFestival;
 import org.team.nagnebatch.place.exception.ApiResponseException;
 
 @Service
@@ -44,24 +43,41 @@ public class TourApiEngService extends TourApiProvider implements BatchApiServic
     this.festivalReader = festivalReader;
   }
 
-  public ResponseAttraction getLocationBased(int page) {
-    ResponseEntity<String> responseJsonData = callTourApi(makeRequestURL(page));
-    return ApiDataParser.convertToLocation(page, responseJsonData.getBody());
+  public ResponseAttraction getLocationBased(ApiLink apiLink,int page) {
+      ResponseEntity<String> responseJsonData = callTourApi(makeRequestURL(apiLink, page));
+      return ApiDataParser.convertToAttraction(page, responseJsonData.getBody());
   }
 
-  private URI makeRequestURL(int page)  {
-    String url = getServiceUrl() + ApiLink.GET_ATTRACTION.getSufixUrl();
-    String[] requiredQueryParams = ApiLink.GET_ATTRACTION.getRequiredParams()
+  public ResponseFestival getFestivalByLocationBased(ApiLink apiLink, int page){
+    ResponseEntity<String> responseJsonData = callTourApi(makeRequestURL(apiLink, page));
+    return ApiDataParser.convertToFestival(page, responseJsonData.getBody());
+  }
+
+  private URI makeRequestURL(ApiLink apiLink,int page)  {
+    String url = getServiceUrl() + apiLink.getSufixUrl();
+    String[] requiredQueryParams = apiLink.getRequiredParams()
         .toArray(new String[0]);
 
+    //TODO 축제 검색 기준을 나중에 추가한다면 매개변수로 받아서 진행해야 합니다.
+    String nowDateStr = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
     Map<String, String> queryParams = new HashMap<>();
-    queryParams.put(requiredQueryParams[0], super.getApiKeys());
-    queryParams.put(requiredQueryParams[1], "AppTest");
-    queryParams.put(requiredQueryParams[2], "ETC");
-    queryParams.put("_type", "json");
-    queryParams.put("pageNo", Integer.toString(page));
-    queryParams.put("numOfRows", Integer.toString(TourApiProvider.DEFAULT_PAGE_SIZE));
-    queryParams.put("contentTypeId", "76");
+    if(apiLink.name().equals(ApiLink.GET_ATTRACTION.name())){
+      queryParams.put(requiredQueryParams[0], super.getApiKeys());
+      queryParams.put(requiredQueryParams[1], "AppTest");
+      queryParams.put(requiredQueryParams[2], "ETC");
+      queryParams.put("_type", "json");
+      queryParams.put("pageNo", Integer.toString(page));
+      queryParams.put("numOfRows", Integer.toString(TourApiProvider.DEFAULT_PAGE_SIZE));
+      queryParams.put("contentTypeId", "76");
+    }else if(apiLink.name().equals(ApiLink.GET_FESTIVAL.name())){
+      queryParams.put(requiredQueryParams[0], super.getApiKeys());
+      queryParams.put(requiredQueryParams[1], "AppTest");
+      queryParams.put(requiredQueryParams[2], "ETC");
+      queryParams.put(requiredQueryParams[3], nowDateStr);
+      queryParams.put("_type", "json");
+      queryParams.put("pageNo", Integer.toString(page));
+      queryParams.put("numOfRows", Integer.toString(TourApiProvider.DEFAULT_PAGE_SIZE));
+    }
 
     UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(url);
 
@@ -76,6 +92,7 @@ public class TourApiEngService extends TourApiProvider implements BatchApiServic
       throw new ApiResponseException("URI NOT FOUND");
     }
   }
+
 
   protected ResponseEntity<String> callTourApi(URI requestUrl) {
     HttpHeaders headers = new HttpHeaders();

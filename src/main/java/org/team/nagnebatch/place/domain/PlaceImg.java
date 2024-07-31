@@ -1,7 +1,7 @@
 package org.team.nagnebatch.place.domain;
 
 import jakarta.persistence.*;
-
+// 1 은 원본, 2 는 썸네일
 @Entity
 public class PlaceImg {
 
@@ -29,6 +29,9 @@ public class PlaceImg {
 
   public String getImgUrl() {
     return imgUrl;
+  }
+
+  public PlaceImg() {
   }
 
   public PlaceImg(Place place, String imgUrl) {

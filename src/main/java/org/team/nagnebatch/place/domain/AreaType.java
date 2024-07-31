@@ -29,6 +29,16 @@ public enum AreaType {
 
   }
 
+  //areaCode로 AreaType을 반환합니다.
+  public static AreaType getByAreaCode(int areaCode) {
+    for (AreaType areaType : values()) {
+      if (areaType.getAreaCode() == areaCode) {
+        return areaType;
+      }
+    }
+    throw new IllegalArgumentException("Invalid area code: " + areaCode);
+  }
+
   public int getAreaCode() {
     return areaCode;
   }
