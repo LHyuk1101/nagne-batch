@@ -54,7 +54,6 @@ public class BatchService {
       return;
     }
 
-    saveArea();
     runJob();
   }
 
