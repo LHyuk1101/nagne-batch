@@ -8,12 +8,12 @@ import org.springframework.batch.item.NonTransientResourceException;
 import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.team.nagnebatch.place.batch.service.TourApiEngService;
-import org.team.nagnebatch.place.client.TourApiProvider;
+import org.team.nagnebatch.place.client.TourApiConnection;
 import org.team.nagnebatch.place.client.config.ApiLink;
 import org.team.nagnebatch.place.domain.requestAttraction.AttractionDTO;
 import org.team.nagnebatch.place.domain.requestAttraction.ResponseAttraction;
 
-public class AttractionItemReader extends TourApiProvider implements ItemReader<AttractionDTO> {
+public class AttractionItemReader extends TourApiConnection implements ItemReader<AttractionDTO> {
 
   private final TourApiEngService tourApiEngService;
   private Iterator<AttractionDTO> attractionIterator;
@@ -36,12 +36,13 @@ public class AttractionItemReader extends TourApiProvider implements ItemReader<
     }
   }
 
-  public void loadAttractions(){
+  public void loadAttractions() {
     List<AttractionDTO> mergeList = new ArrayList<>();
     int page = 1;
-    while(true){
-      ResponseAttraction attractions1 = tourApiEngService.getLocationBased(ApiLink.GET_ATTRACTION, page);
-      if(!attractions1.getAttractions().isEmpty()){
+    while (true) {
+      ResponseAttraction attractions1 = tourApiEngService.getLocationBased(ApiLink.GET_ATTRACTION,
+          page);
+      if (!attractions1.getAttractions().isEmpty()) {
         List<AttractionDTO> filterAttractions = attractions1.getAttractions()
             .stream()
             .filter(fest -> fest.getAreaCode() != null && !fest.getAreaCode().isEmpty())
@@ -49,7 +50,7 @@ public class AttractionItemReader extends TourApiProvider implements ItemReader<
         mergeList.addAll(filterAttractions);
         page++;
       }
-      if(!attractions1.isNextPage()){
+      if (!attractions1.isNextPage()) {
         break;
       }
     }

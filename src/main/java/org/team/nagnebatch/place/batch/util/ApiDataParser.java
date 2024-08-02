@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.team.nagnebatch.place.client.TourApiProvider;
+import org.team.nagnebatch.place.client.TourApiConnection;
 import org.team.nagnebatch.place.domain.requestAttraction.AttractionDTO;
 import org.team.nagnebatch.place.domain.requestAttraction.ResponseAttraction;
 import org.team.nagnebatch.place.domain.requestFestival.FestivalDTO;
@@ -46,7 +46,7 @@ public class ApiDataParser {
       }
 
       totalCount = rootNode.path("response").path("body").path("totalCount").asInt();
-      isNextPage = totalCount > TourApiProvider.DEFAULT_PAGE_SIZE * (page - 1) + attractions.size();
+      isNextPage = totalCount > TourApiConnection.DEFAULT_PAGE_SIZE * (page - 1) + attractions.size();
 
       return new ResponseAttraction(attractions, totalCount, isNextPage);
     } catch (Exception e) {
@@ -87,7 +87,7 @@ public class ApiDataParser {
       }
 
       totalCount = rootNode.path("response").path("body").path("totalCount").asInt();
-      isNextPage = totalCount > TourApiProvider.DEFAULT_PAGE_SIZE * (page - 1) + festivals.size();
+      isNextPage = totalCount > TourApiConnection.DEFAULT_PAGE_SIZE * (page - 1) + festivals.size();
 
       return new ResponseFestival(festivals, totalCount, isNextPage);
     } catch (Exception e) {

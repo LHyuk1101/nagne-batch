@@ -15,13 +15,13 @@ public class Store {
   @Column(length = 1000)
   private String openTime;
 
-  private String contact;
+  private String infocenter;
 
-  public Store(Long id, Place place, String openTime, String contact) {
+  public Store(Long id, Place place, String openTime, String infocenter) {
     this.id = id;
     this.place = place;
     this.openTime = openTime;
-    this.contact = contact;
+    this.infocenter = infocenter;
   }
 
   public Store() {
@@ -44,12 +44,12 @@ public class Store {
     this.place = place;
   }
 
-  public String getContact() {
-    return contact;
+  public String getInfocenter() {
+    return infocenter;
   }
 
-  public void setContact(String contact) {
-    this.contact = contact;
+  public void setInfocenter(String contact) {
+    this.infocenter = contact;
   }
 
   public String getOpenTime() {
