@@ -30,6 +30,10 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
   @Transactional
   public PlaceAndStore process(CsvData data) throws Exception {
 
+    if (data.getPhoneNumber() != null && data.getPhoneNumber().contains("Phone")){
+      data.setPhoneNumber(null);
+    }
+
     if(data.getImageUrl() != null && data.getImageUrl().contains("proxy")){
       return null;
     }
