@@ -39,9 +39,18 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
       return null;
     }
 
-    if (data.getBusinessHours() != null && data.getBusinessHours().contains("\\u202f")){
-      data.setBusinessHours(data.getBusinessHours().replace("\\u202f", ""));
+    String businessHours = data.getBusinessHours();
+
+    if (businessHours != null) {
+      if (businessHours.contains("\\u202f")) {
+        businessHours = businessHours.replace("\\u202f", "");
+      }
+      if (businessHours.equals("['No Business Hours Available']") || businessHours.equals("checkin_time:,checkout_time:")) {
+        businessHours = null;
+      }
+      data.setBusinessHours(businessHours);
     }
+
 
     Area area = areaRepository.findById(Integer.parseInt(data.getAreatype()))
         .orElseThrow(() -> new IllegalArgumentException("AREA 코드 잘못됨 : " + data.getAreatype()));
