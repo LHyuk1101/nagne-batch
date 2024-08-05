@@ -39,6 +39,10 @@ public class PlaceAndStoreProcessorForLodging implements ItemProcessor<CsvData, 
       return null;
     }
 
+    if (data.getBusinessHours() != null && data.getBusinessHours().contains("\\u202f")){
+      data.setBusinessHours(data.getBusinessHours().replace("\\u202f", ""));
+    }
+
 
     Area area = areaRepository.findById(Integer.parseInt(data.getAreatype()))
         .orElseThrow(() -> new IllegalArgumentException("AREA 코드 잘못됨 : " + data.getAreatype()));
