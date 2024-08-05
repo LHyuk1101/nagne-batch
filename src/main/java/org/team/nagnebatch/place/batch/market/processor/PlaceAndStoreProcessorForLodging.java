@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.team.nagnebatch.place.batch.market.domain.Area;
 import org.team.nagnebatch.place.batch.market.domain.CsvData;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
+import org.team.nagnebatch.place.domain.ApiType;
 import org.team.nagnebatch.place.domain.Place;
 import org.team.nagnebatch.place.domain.PlaceImg;
 import org.team.nagnebatch.place.domain.Store;
@@ -38,22 +39,27 @@ public class PlaceAndStoreProcessorForLodging implements ItemProcessor<CsvData, 
       return null;
     }
 
+
     Area area = areaRepository.findById(Integer.parseInt(data.getAreatype()))
         .orElseThrow(() -> new IllegalArgumentException("AREA 코드 잘못됨 : " + data.getAreatype()));
+
+    ApiType apiType = ApiType.NONE;
 
     String uniqueId;
     do {
       uniqueId = String.format("%07d", ThreadLocalRandom.current().nextInt(1000000));
     } while (placeRepository.existsByContentId(uniqueId));
 
+
     Place place = new Place(
         data.getAddress(),
         data.getName(),
         uniqueId,
-        CONTENT_TYPE_ID,
         data.getLatitude(),
+        CONTENT_TYPE_ID,
         data.getLongitude(),
-        area
+        area,
+        apiType
     );
 
     Store store = new Store(

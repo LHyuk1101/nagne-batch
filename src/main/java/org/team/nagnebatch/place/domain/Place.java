@@ -63,6 +63,18 @@ public class Place extends BaseEntity {
     this.lng = longitude;
   }
 
+  public Place(String address, String title, String contentId, double lat, int contentTypeId,
+      double lng, Area area, ApiType apiType) {
+    this.address = address;
+    this.title = title;
+    this.contentId = contentId;
+    this.lat = lat;
+    this.contentTypeId = contentTypeId;
+    this.lng = lng;
+    this.area = area;
+    this.apiType = apiType;
+  }
+
   public Long getId() {
     return id;
   }
@@ -91,4 +103,11 @@ public class Place extends BaseEntity {
     return lng;
   }
 
+  public ApiType getApiType() {
+    return apiType;
+  }
+
+  public void setApiType(ApiType apiType) {
+    this.apiType = apiType;
+  }
 }
