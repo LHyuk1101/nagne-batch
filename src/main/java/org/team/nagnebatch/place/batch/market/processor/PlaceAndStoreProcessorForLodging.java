@@ -1,5 +1,6 @@
 package org.team.nagnebatch.place.batch.market.processor;
 
+import java.time.LocalDateTime;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -63,7 +64,7 @@ public class PlaceAndStoreProcessorForLodging implements ItemProcessor<CsvData, 
       uniqueId = String.format("%07d", ThreadLocalRandom.current().nextInt(1000000));
     } while (placeRepository.existsByContentId(uniqueId));
 
-
+    String overviewTest = "숙소 데이터 오버뷰 입니다.";
     Place place = new Place(
         data.getAddress(),
         data.getName(),
@@ -72,7 +73,10 @@ public class PlaceAndStoreProcessorForLodging implements ItemProcessor<CsvData, 
         CONTENT_TYPE_ID,
         data.getLongitude(),
         area,
-        apiType
+        apiType,
+        overviewTest,
+        data.getImageUrl(),
+        LocalDateTime.now()
     );
 
     Store store = new Store(

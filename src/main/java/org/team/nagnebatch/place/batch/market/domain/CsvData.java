@@ -1,5 +1,7 @@
 package org.team.nagnebatch.place.batch.market.domain;
 
+import java.time.LocalDateTime;
+
 public class CsvData {
   private String areatype;
   private Long index;
@@ -11,6 +13,9 @@ public class CsvData {
   private Double longitude;
   private String businessHours;
   private String imageUrl;
+  private String overview;
+  private String thumbnailUrl;
+  private LocalDateTime modifiedDate;
 
   public String getImageUrl() {
     return imageUrl;
@@ -91,5 +96,29 @@ public class CsvData {
 
   public void setBusinessHours(String businessHours) {
     this.businessHours = businessHours;
+  }
+
+  public String getOverview() {
+    return overview;
+  }
+
+  public void setOverview(String overview) {
+    this.overview = overview;
+  }
+
+  public String getThumbnailUrl() {
+    return thumbnailUrl;
+  }
+
+  public void setThumbnailUrl(String thumbnailUrl) {
+    this.thumbnailUrl = thumbnailUrl;
+  }
+
+  public LocalDateTime getModifiedDate() {
+    return modifiedDate;
+  }
+
+  public void setModifiedDate(LocalDateTime modifiedDate) {
+    this.modifiedDate = modifiedDate;
   }
 }

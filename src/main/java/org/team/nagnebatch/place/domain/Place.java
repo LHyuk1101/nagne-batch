@@ -84,6 +84,7 @@ public class Place extends BaseEntity {
     this.apiType = apiType;
     this.overview = overview;
     this.thumbnailUrl = thumbnailUrl;
+    this.modifiedTime = modifiedDate;
   }
 
   public Long getId() {

@@ -1,5 +1,6 @@
 package org.team.nagnebatch.place.batch.market.processor;
 
+import java.time.LocalDateTime;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -70,7 +71,10 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
         CONTENT_TYPE_ID,
         data.getLongitude(),
         area,
-        apiType
+        apiType,
+        null,
+        data.getImageUrl(),
+        LocalDateTime.now()
     );
 
     Store store = new Store(
