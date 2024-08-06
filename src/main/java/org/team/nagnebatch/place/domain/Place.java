@@ -9,6 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
 import org.team.nagnebatch.place.batch.market.domain.Area;
 import org.team.nagnebatch.utils.BaseEntity;
 
@@ -29,15 +30,23 @@ public class Place extends BaseEntity {
 
   private int contentTypeId;
 
+  private String overview;
+
   private double lat;
 
   private double lng;
+
+  private int likes;
 
   @Enumerated(EnumType.STRING)
   private ApiType apiType;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private Area area;
+
+  private String thumbnailUrl;
+
+  private LocalDateTime modifiedTime;
 
   protected Place() {}
 
@@ -64,7 +73,7 @@ public class Place extends BaseEntity {
   }
 
   public Place(String address, String title, String contentId, double lat, int contentTypeId,
-      double lng, Area area, ApiType apiType) {
+      double lng, Area area, ApiType apiType, String overview, String thumbnailUrl, LocalDateTime modifiedDate) {
     this.address = address;
     this.title = title;
     this.contentId = contentId;
@@ -73,6 +82,8 @@ public class Place extends BaseEntity {
     this.lng = lng;
     this.area = area;
     this.apiType = apiType;
+    this.overview = overview;
+    this.thumbnailUrl = thumbnailUrl;
   }
 
   public Long getId() {
