@@ -11,8 +11,6 @@ import org.springframework.web.util.DefaultUriBuilderFactory.EncodingMode;
 @Configuration
 public class RestTemplateConfig {
 
-
-
   @Bean
   public RestTemplate restTemplate(RestTemplateBuilder builder) {
     DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory();
@@ -23,6 +21,4 @@ public class RestTemplateConfig {
         .setReadTimeout(Duration.ofSeconds(5))
         .build();
   }
-
-
 }

@@ -1,14 +1,10 @@
 spring.application.name: nagne-batch
-spring.batch.job.enabled: true
+spring.batch.job.enabled: false
 
 spring.batch.jdbc.initialize-schema: always
 spring:
   config:
     import: classpath:application-key.yml
-
-  h2:
-    console:
-      enabled: true
 ---
 spring.config.activate.on-profile: local
 spring:
@@ -27,6 +23,8 @@ spring:
   h2:
     console:
       enabled: true
+  config:
+    import: classpath:application-key.yml
 
 ---
 spring.config.activate.on-profile: prod
