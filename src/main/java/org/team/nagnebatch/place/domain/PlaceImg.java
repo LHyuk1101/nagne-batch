@@ -7,12 +7,13 @@ public class PlaceImg {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "place_img_id")
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   private Place place;
 
-  @Column(length = 500)
+  @Column(length = 2083)
   private String imgUrl;
 
   public Long getId() {

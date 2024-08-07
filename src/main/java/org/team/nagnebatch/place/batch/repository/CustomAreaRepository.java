@@ -5,7 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.team.nagnebatch.place.batch.market.domain.Area;
+import org.team.nagnebatch.place.domain.Area;
 
 @Repository
 public class CustomAreaRepository {

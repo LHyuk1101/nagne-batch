@@ -122,7 +122,7 @@ public class TourApiEngService {
       queryParams.put(requiredQueryParams[2], "ETC");
       queryParams.put("_type", "json");
       queryParams.put("pageNo", Integer.toString(page));
-      queryParams.put("numOfRows", Integer.toString(50));
+      queryParams.put("numOfRows", Integer.toString(TourApiConnection.DEFAULT_PAGE_SIZE));
       queryParams.put("contentTypeId", "76");
     } else if (apiLink.name().equals(ApiLink.GET_FESTIVAL.name())) {
       queryParams.put(requiredQueryParams[0], tourApiConnectionDecorator.getApiKey());
@@ -131,7 +131,7 @@ public class TourApiEngService {
       queryParams.put(requiredQueryParams[3], nowDateStr);
       queryParams.put("_type", "json");
       queryParams.put("pageNo", Integer.toString(page));
-      queryParams.put("numOfRows", Integer.toString(50));
+      queryParams.put("numOfRows", Integer.toString(TourApiConnection.DEFAULT_PAGE_SIZE));
     }
 
     UriComponentsBuilder urlBuilder = UriComponentsBuilder.fromHttpUrl(url);

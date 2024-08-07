@@ -5,7 +5,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.team.nagnebatch.place.batch.market.domain.Area;
+import org.team.nagnebatch.place.domain.Area;
 import org.team.nagnebatch.place.batch.market.domain.CsvData;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.domain.ApiType;
@@ -74,7 +74,7 @@ public class PlaceAndStoreProcessorForLodging implements ItemProcessor<CsvData, 
         data.getLongitude(),
         area,
         apiType,
-        overviewTest,
+        data.getOverview(),
         data.getImageUrl(),
         LocalDateTime.now()
     );

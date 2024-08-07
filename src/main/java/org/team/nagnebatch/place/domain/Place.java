@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import org.team.nagnebatch.place.batch.market.domain.Area;
 import org.team.nagnebatch.utils.BaseEntity;
 
 @Entity
@@ -21,8 +20,10 @@ public class Place extends BaseEntity {
   @Column(name = "place_id")
   private Long id;
 
+  @Column(length = 200)
   private String address;
 
+  @Column(length = 200)
   private String title;
 
   @Column(unique = true)
@@ -45,9 +46,11 @@ public class Place extends BaseEntity {
   @ManyToOne(fetch = FetchType.LAZY)
   private Area area;
 
-  private String thumbnailUrl;
 
   private LocalDateTime modifiedTime;
+
+  @Column(length = 200)
+  private String thumbnailUrl;
 
   protected Place() {}
 
