@@ -13,12 +13,14 @@ import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.retry.RetryException;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.batch.service.TourApiEngService;
 import org.team.nagnebatch.place.domain.PlaceWrapper;
 import org.team.nagnebatch.place.domain.requestAttraction.AttractionDTO;
 import org.team.nagnebatch.place.domain.requestFestival.FestivalDTO;
+import org.team.nagnebatch.place.exception.ApiResponseException;
 
 @Configuration
 @EnableBatchProcessing
@@ -32,7 +34,6 @@ public class createPlaceBatchConfig {
 
   @Autowired
   private AreaRepository areaRepository;
-
 
   @Bean
   public Job createPlaceJob(JobRepository jobRepository, Step createAttreactionStep, Step createFestivalStep) {
@@ -49,6 +50,12 @@ public class createPlaceBatchConfig {
         .reader(createAttractionItemReader())
         .processor(createAttractionItemProcessor())
         .writer(createAttractionItemWriter())
+        .faultTolerant()
+        .skip(ApiResponseException.class)
+        .skipLimit(1)
+        .retry(RetryException.class)
+        .retryLimit(2)
+        .noRollback(NumberFormatException.class)
         .build();
   }
 
@@ -93,5 +100,4 @@ public class createPlaceBatchConfig {
   public ItemWriter<PlaceWrapper> createFestivalItemWriter(){
     return new FestivalItemWriter(entityManagerFactory);
   }
-
 }

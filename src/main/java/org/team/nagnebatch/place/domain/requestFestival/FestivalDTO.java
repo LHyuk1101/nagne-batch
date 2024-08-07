@@ -1,6 +1,7 @@
 package org.team.nagnebatch.place.domain.requestFestival;
 
 public class FestivalDTO {
+
   private String addr1;
 
   private String contentId;
@@ -26,6 +27,14 @@ public class FestivalDTO {
   private String eventStartDate;
 
   private String eventEndDate;
+
+  private String modifiedTime;
+
+  private String overview;
+
+  public void addOverview(String overview) {
+    this.overview = overview;
+  }
 
   public String getAddr1() {
     return addr1;
@@ -79,8 +88,17 @@ public class FestivalDTO {
     return eventEndDate;
   }
 
+  public String getModifiedTime() {
+    return modifiedTime;
+  }
+
+  public String getOverview() {
+    return overview;
+  }
+
   // Builder 클래스
   public static class Builder {
+
     private String addr1;
     private String contentId;
     private Long contentTypeId;
@@ -94,6 +112,8 @@ public class FestivalDTO {
     private String createdTime;
     private String eventStartDate;
     private String eventEndDate;
+    private String overview;
+    private String modifiedTime;
 
     public Builder addr1(String addr1) {
       this.addr1 = addr1;
@@ -160,6 +180,16 @@ public class FestivalDTO {
       return this;
     }
 
+    public Builder overview(String overview) {
+      this.overview = overview;
+      return this;
+    }
+
+    public Builder modifiedTime(String modifiedTime) {
+      this.modifiedTime = modifiedTime;
+      return this;
+    }
+
     public FestivalDTO build() {
       FestivalDTO dto = new FestivalDTO();
       dto.addr1 = this.addr1;
@@ -175,6 +205,8 @@ public class FestivalDTO {
       dto.createdTime = this.createdTime;
       dto.eventStartDate = this.eventStartDate;
       dto.eventEndDate = this.eventEndDate;
+      dto.overview = this.overview;
+      dto.modifiedTime = this.modifiedTime;
       return dto;
     }
   }

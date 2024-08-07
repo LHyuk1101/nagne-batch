@@ -8,8 +8,10 @@ public class AttractionDTO {
 
   private Long contentTypeId;
 
+  //기본 이미지
   private String firstImage;
 
+  //썸네일 이미지
   private String firstImage2;
 
   private double lat;
@@ -21,6 +23,15 @@ public class AttractionDTO {
   private String title;
 
   private String areaCode;
+
+  private String overview;
+
+  private String modifiedTime;
+
+  //데이터 처리 동작을 맡는 것
+  public void addContent(String overview){
+    this.overview = overview;
+  }
 
   public String getAddr1() {
     return addr1;
@@ -58,10 +69,18 @@ public class AttractionDTO {
     return title;
   }
 
+  public String getOverview() {
+    return overview;
+  }
+
   public String getAreaCode() {
     return areaCode;
   }
+
+  public String getModifiedTime() {return modifiedTime;}
+
   public static class Builder {
+
     private String addr1;
     private String contentId;
     private Long contentTypeId;
@@ -72,6 +91,8 @@ public class AttractionDTO {
     private String tel;
     private String title;
     private String areaCode;
+    private String overview;
+    private String modifiedTime;
 
     public Builder addr1(String addr1) {
       this.addr1 = addr1;
@@ -123,6 +144,16 @@ public class AttractionDTO {
       return this;
     }
 
+    public Builder overview(String overview){
+      this.overview = overview;
+      return this;
+    }
+
+    public Builder modifiedTime(String modifiedTime) {
+      this.modifiedTime = modifiedTime;
+      return this;
+    }
+
     public AttractionDTO build() {
       AttractionDTO dto = new AttractionDTO();
       dto.addr1 = this.addr1;
@@ -135,6 +166,8 @@ public class AttractionDTO {
       dto.tel = this.tel;
       dto.title = this.title;
       dto.areaCode = this.areaCode;
+      dto.overview = this.overview;
+      dto.modifiedTime = this.modifiedTime;
       return dto;
     }
   }
