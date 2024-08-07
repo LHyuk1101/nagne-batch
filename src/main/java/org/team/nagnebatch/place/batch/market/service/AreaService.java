@@ -3,7 +3,7 @@ package org.team.nagnebatch.place.batch.market.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.team.nagnebatch.place.batch.market.domain.Area;
+import org.team.nagnebatch.place.domain.Area;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.domain.AreaType;
 

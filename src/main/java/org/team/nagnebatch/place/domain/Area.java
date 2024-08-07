@@ -1,16 +1,17 @@
-package org.team.nagnebatch.place.batch.market.domain;
+package org.team.nagnebatch.place.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import org.team.nagnebatch.place.domain.AreaType;
 
 @Entity
-@Table(name = "areas")
+@Table(name = "area")
 public class Area {
 
   @Id
   private Integer areaCode;
+  @Column(length = 100)
   private String name;
 
   public Area() {

@@ -3,7 +3,7 @@ package org.team.nagnebatch.place.batch.createPlace;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.batch.item.ItemProcessor;
-import org.team.nagnebatch.place.batch.market.domain.Area;
+import org.team.nagnebatch.place.domain.Area;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.client.TourApiConnection;
 import org.team.nagnebatch.place.domain.ApiType;

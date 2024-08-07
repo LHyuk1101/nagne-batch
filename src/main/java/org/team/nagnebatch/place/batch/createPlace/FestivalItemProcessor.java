@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import org.springframework.batch.item.ItemProcessor;
-import org.team.nagnebatch.place.batch.market.domain.Area;
+import org.team.nagnebatch.place.domain.Area;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.domain.ApiType;
 import org.team.nagnebatch.place.domain.Festival;

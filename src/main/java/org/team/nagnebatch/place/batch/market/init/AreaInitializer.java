@@ -1,14 +1,11 @@
 package org.team.nagnebatch.place.batch.market.init;
 
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityTransaction;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.team.nagnebatch.place.batch.market.domain.Area;
+import org.team.nagnebatch.place.domain.Area;
 import org.team.nagnebatch.place.batch.repository.AreaRepository;
 import org.team.nagnebatch.place.batch.repository.CustomAreaRepository;
 import org.team.nagnebatch.place.domain.AreaType;
