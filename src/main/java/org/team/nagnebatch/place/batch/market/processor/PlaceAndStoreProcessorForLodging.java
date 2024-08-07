@@ -74,7 +74,7 @@ public class PlaceAndStoreProcessorForLodging implements ItemProcessor<CsvData, 
         data.getLongitude(),
         area,
         apiType,
-        overviewTest,
+        data.getOverview(),
         data.getImageUrl(),
         LocalDateTime.now()
     );
