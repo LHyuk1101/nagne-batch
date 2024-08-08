@@ -26,6 +26,6 @@ public class CustomAreaRepository {
             em.close();
         }
 
-        return area.getAreaCode();
+        return area.getCode();
     }
 }
