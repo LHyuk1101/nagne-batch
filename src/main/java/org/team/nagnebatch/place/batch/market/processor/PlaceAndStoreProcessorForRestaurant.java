@@ -134,15 +134,15 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
       throw new IllegalArgumentException("시크릿키 비었거나 null임");
     }
 
-    // Download the image
+    // 임시파일 저장
     String fileName = UUID.randomUUID().toString() + "-" + Paths.get(new URL(imageUrl).getPath()).getFileName().toString();
     InputStream inputStream = new URL(imageUrl).openStream();
 
-    // Create a unique temporary file name
+    // 유니크한 이름 부여
     Path tempFile = Files.createTempFile("upload-", UUID.randomUUID().toString() + "-" + fileName);
     Files.copy(inputStream, tempFile, java.nio.file.StandardCopyOption.REPLACE_EXISTING);
 
-    // Upload the file to S3
+    // s3에 업로드 로직
     S3Client s3Client = S3Client.builder()
         .region(Region.AP_NORTHEAST_2)
         .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
@@ -155,7 +155,7 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
 
     PutObjectResponse putObjectResponse = s3Client.putObject(putObjectRequest, RequestBody.fromFile(tempFile));
 
-    // Clean up the temporary file
+    // 임시파일 삭제
     Files.delete(tempFile);
 
     return s3Client.utilities().getUrl(b -> b.bucket(bucketName).key(fileName)).toExternalForm();
