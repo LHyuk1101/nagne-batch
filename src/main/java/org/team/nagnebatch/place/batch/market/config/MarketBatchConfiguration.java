@@ -31,6 +31,8 @@ public class MarketBatchConfiguration {
   private final AreaRepository areaRepository;
   private final PlaceRepository placeRepository;
   private final DataSource dataSource;
+  private final PlaceAndStoreProcessorForRestaurant placeAndStoreProcessorForRestaurant;
+  private final PlaceAndStoreProcessorForLodging placeAndStoreProcessorForLodging;
 
   @Autowired
   public MarketBatchConfiguration(
@@ -38,12 +40,16 @@ public class MarketBatchConfiguration {
           RestaurantWriter restaurantWriter,
           AreaRepository areaRepository,
           PlaceRepository placeRepository,
-          DataSource dataSource) {
+          DataSource dataSource,
+          PlaceAndStoreProcessorForRestaurant placeAndStoreProcessorForRestaurant,
+          PlaceAndStoreProcessorForLodging plceAndStoreProcessorForLodging) {
     this.restaurantReader = restaurantReader;
     this.restaurantWriter = restaurantWriter;
     this.areaRepository = areaRepository;
     this.placeRepository = placeRepository;
     this.dataSource = dataSource;
+    this.placeAndStoreProcessorForRestaurant = placeAndStoreProcessorForRestaurant;
+    this.placeAndStoreProcessorForLodging = plceAndStoreProcessorForLodging;
   }
 
   @Bean
@@ -59,7 +65,7 @@ public class MarketBatchConfiguration {
     return new StepBuilder("restaurantStep", jobRepository)
             .<CsvData, PlaceAndStore>chunk(10, transactionManager)
             .reader(restaurantReader.multiResourceItemReader("classpath:restaurant/*.csv"))
-            .processor(new PlaceAndStoreProcessorForRestaurant(areaRepository,placeRepository))
+            .processor(placeAndStoreProcessorForRestaurant)
             .writer(restaurantWriter.compositeItemWriter())
             .build();
   }
@@ -69,7 +75,7 @@ public class MarketBatchConfiguration {
     return new StepBuilder("lodgingStep", jobRepository)
             .<CsvData, PlaceAndStore>chunk(10, transactionManager)
             .reader(restaurantReader.multiResourceItemReader("classpath:lodging/*.csv"))
-            .processor(new PlaceAndStoreProcessorForLodging(areaRepository,placeRepository))
+            .processor(placeAndStoreProcessorForLodging)
             .writer(restaurantWriter.compositeItemWriter())
             .build();
   }

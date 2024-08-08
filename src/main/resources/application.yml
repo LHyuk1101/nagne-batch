@@ -9,6 +9,16 @@ spring:
   h2:
     console:
       enabled: true
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${s3.accessKey}
+        secret-key: ${s3.secretKey}
+      s3:
+        bucket: ${s3.bucketName}
+      region:
+        static: ap-northeast-2
 ---
 spring.config.activate.on-profile: local
 spring:
@@ -22,7 +32,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
-    show-sql: true
+#    show-sql: true
     defer-datasource-initialization: true
   h2:
     console:
