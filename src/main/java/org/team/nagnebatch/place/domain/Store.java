@@ -11,6 +11,7 @@ public class Store {
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "place_id")
   private Place place;
 
   @Column(length = 1000)
