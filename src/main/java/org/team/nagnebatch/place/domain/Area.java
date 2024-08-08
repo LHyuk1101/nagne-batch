@@ -8,7 +8,8 @@ import jakarta.persistence.Id;
 public class Area {
 
   @Id
-  private Integer code;
+  @Column(name = "area_code")
+  private int code;
 
   @Column(length = 100)
   private String name;
@@ -21,12 +22,12 @@ public class Area {
     this.name = areaType.getName();
   }
 
-  public Area(Integer code, String name) {
+  public Area(int code, String name) {
     this.code = code;
     this.name = name;
   }
 
-  public Integer getCode() {
+  public int getCode() {
     return code;
   }
 
