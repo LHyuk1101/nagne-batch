@@ -3,14 +3,14 @@ package org.team.nagnebatch.place.domain;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "area")
 public class Area {
 
   @Id
-  private Integer areaCode;
+  @Column(name = "area_code")
+  private int code;
+
   @Column(length = 100)
   private String name;
 
@@ -18,21 +18,21 @@ public class Area {
   }
 
   public Area(AreaType areaType){
-    this.areaCode = areaType.getAreaCode();
+    this.code = areaType.getAreaCode();
     this.name = areaType.getName();
   }
 
-  public Area(Integer areaCode, String name) {
-    this.areaCode = areaCode;
+  public Area(int code, String name) {
+    this.code = code;
     this.name = name;
   }
 
-  public Integer getAreaCode() {
-    return areaCode;
+  public int getCode() {
+    return code;
   }
 
-  public void setAreaCode(Integer areaCode) {
-    this.areaCode = areaCode;
+  public void setCode(Integer code) {
+    this.code = code;
   }
 
   public String getName() {

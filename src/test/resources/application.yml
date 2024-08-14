@@ -1,10 +1,24 @@
 spring.application.name: nagne-batch
-spring.batch.job.enabled: false
+spring.batch.job.enabled: true
 
 spring.batch.jdbc.initialize-schema: always
 spring:
   config:
     import: classpath:application-key.yml
+
+  h2:
+    console:
+      enabled: true
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${s3.accessKey}
+        secret-key: ${s3.secretKey}
+      s3:
+        bucket: ${s3.bucketName}
+      region:
+        static: ap-northeast-2
 ---
 spring.config.activate.on-profile: local
 spring:
@@ -23,8 +37,6 @@ spring:
   h2:
     console:
       enabled: true
-  config:
-    import: classpath:application-key.yml
 
 ---
 spring.config.activate.on-profile: prod
@@ -41,7 +53,7 @@ spring:
     password: ${database.password}
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true

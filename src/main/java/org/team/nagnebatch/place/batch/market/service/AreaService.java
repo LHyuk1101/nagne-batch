@@ -22,7 +22,7 @@ public class AreaService {
       Area area = new Area(areaType.getAreaCode(), areaType.getName());
       log.info("Saving Area: " + areaType.getName() + " (" + areaType.getAreaCode() + ")");
       areaRepository.save(area);
-      log.info(area.getAreaCode() + " " + areaType.getName() + " saved");
+      log.info(area.getCode() + " " + areaType.getName() + " saved");
     }
   }
 }

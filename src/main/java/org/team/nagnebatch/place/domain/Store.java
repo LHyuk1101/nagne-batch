@@ -11,19 +11,20 @@ public class Store {
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "place_id")
   private Place place;
 
   @Column(length = 1000)
   private String openTime;
 
   @Column(length = 50)
-  private String infocenter;
+  private String contactNumber;
 
-  public Store(Long id, Place place, String openTime, String infocenter) {
+  public Store(Long id, Place place, String openTime, String contactNumber) {
     this.id = id;
     this.place = place;
     this.openTime = openTime;
-    this.infocenter = infocenter;
+    this.contactNumber = contactNumber;
   }
 
   public Store() {
@@ -46,12 +47,12 @@ public class Store {
     this.place = place;
   }
 
-  public String getInfocenter() {
-    return infocenter;
+  public String getContactNumber() {
+    return contactNumber;
   }
 
-  public void setInfocenter(String contact) {
-    this.infocenter = contact;
+  public void setContactNumber(String contactNumber) {
+    this.contactNumber = contactNumber;
   }
 
   public String getOpenTime() {
