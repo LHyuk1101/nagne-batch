@@ -60,6 +60,7 @@ public class MarketBatchConfiguration {
             .build();
   }
 
+
   @Bean
   public Step restaurantStep(JobRepository jobRepository, PlatformTransactionManager transactionManager) throws IOException {
     return new StepBuilder("restaurantStep", jobRepository)

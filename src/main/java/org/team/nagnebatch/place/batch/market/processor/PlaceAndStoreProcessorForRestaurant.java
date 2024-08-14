@@ -151,6 +151,7 @@ public class PlaceAndStoreProcessorForRestaurant implements ItemProcessor<CsvDat
     PutObjectRequest putObjectRequest = PutObjectRequest.builder()
         .bucket(bucketName)
         .key(fileName)
+        .cacheControl("max-age=31536000, public")  // 1년 동안 캐싱
         .build();
 
     PutObjectResponse putObjectResponse = s3Client.putObject(putObjectRequest, RequestBody.fromFile(tempFile));
