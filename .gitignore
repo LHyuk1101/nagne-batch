@@ -17,7 +17,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 src/main/resources/application-key.yml
-
+src/test/resources/application-key.yml
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -36,3 +36,5 @@ out/
 
 ### VS Code ###
 .vscode/
+.DS_Store
+*.csv

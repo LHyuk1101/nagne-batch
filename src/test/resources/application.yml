@@ -1,0 +1,61 @@
+spring.application.name: nagne-batch
+spring.batch.job.enabled: true
+
+spring.batch.jdbc.initialize-schema: always
+spring:
+  config:
+    import: classpath:application-key.yml
+
+  h2:
+    console:
+      enabled: true
+
+  cloud:
+    aws:
+      credentials:
+        access-key: ${s3.accessKey}
+        secret-key: ${s3.secretKey}
+      s3:
+        bucket: ${s3.bucketName}
+      region:
+        static: ap-northeast-2
+---
+spring.config.activate.on-profile: local
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:core;MODE=MySQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    defer-datasource-initialization: true
+  h2:
+    console:
+      enabled: true
+
+---
+spring.config.activate.on-profile: prod
+spring:
+  datasource:
+    hikari:
+      connection-timeout: 5000
+      maximum-pool-size: 5
+      keepalive-time: 30000
+      validation-timeout: 1000
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${database.ip}/${database.name}?serverTimezone=UTC&characterEncoding=UTF-8
+    username: ${database.username}
+    password: ${database.password}
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true

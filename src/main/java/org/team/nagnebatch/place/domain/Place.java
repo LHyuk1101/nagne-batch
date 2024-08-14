@@ -1,60 +1,109 @@
 package org.team.nagnebatch.place.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import java.time.LocalDateTime;
+import org.team.nagnebatch.utils.BaseEntity;
 
 @Entity
-public class Place {
+public class Place extends BaseEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "place_id")
   private Long id;
 
-  private String address1;
+  @Column(length = 200)
+  private String address;
 
-  private String address2;
+  @Column(length = 200)
+  private String title;
 
-  private int contentId;
+  private String contentId;
 
   private int contentTypeId;
 
-  private double latitude;
+  @Column(columnDefinition = "LONGTEXT")
+  private String overview;
 
-  private double longitude;
+  private double lat;
+
+  private double lng;
+
+  private int likes;
 
   @Enumerated(EnumType.STRING)
   private ApiType apiType;
 
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "area_code")
+  private Area area;
+
+  private LocalDateTime modifiedTime;
+
+  @Column(length = 200)
+  private String thumbnailUrl;
+
   protected Place() {}
 
-  public Place(Long id, String address1, String address2, int contentId, int contentTypeId,
-      double latitude, double longitude) {
-    this.id = id;
-    this.address1 = address1;
-    this.address2 = address2;
+  // 지역코드 기반 insert
+  public Place(String address, String title, String contentId, int contentTypeId, double latitude, double longitude, Area area) {
+    this.address = address;
+    this.title = title;
     this.contentId = contentId;
     this.contentTypeId = contentTypeId;
-    this.latitude = latitude;
-    this.longitude = longitude;
+    this.lat = latitude;
+    this.lng = longitude;
+    this.area = area;
+  }
+
+  public Place(Long id, String address, String title, String contentId, int contentTypeId,
+               double latitude, double longitude) {
+    this.id = id;
+    this.address = address;
+    this.title = title;
+    this.contentId = contentId;
+    this.contentTypeId = contentTypeId;
+    this.lat = latitude;
+    this.lng = longitude;
+  }
+
+  public Place(String address, String title, String contentId, double lat, int contentTypeId,
+      double lng, Area area, ApiType apiType, String overview, String thumbnailUrl, LocalDateTime modifiedDate) {
+    this.address = address;
+    this.title = title;
+    this.contentId = contentId;
+    this.lat = lat;
+    this.contentTypeId = contentTypeId;
+    this.lng = lng;
+    this.area = area;
+    this.apiType = apiType;
+    this.overview = overview;
+    this.thumbnailUrl = thumbnailUrl;
+    this.modifiedTime = modifiedDate;
   }
 
   public Long getId() {
     return id;
   }
 
-  public String getAddress1() {
-    return address1;
+  public String getAddress() {
+    return address;
   }
 
-  public String getAddress2() {
-    return address2;
+  public String getTitle() {
+    return title;
   }
 
-  public int getContentId() {
+  public String getContentId() {
     return contentId;
   }
 
@@ -63,10 +112,18 @@ public class Place {
   }
 
   public double getLatitude() {
-    return latitude;
+    return lat;
   }
 
   public double getLongitude() {
-    return longitude;
+    return lng;
+  }
+
+  public ApiType getApiType() {
+    return apiType;
+  }
+
+  public void setApiType(ApiType apiType) {
+    this.apiType = apiType;
   }
 }

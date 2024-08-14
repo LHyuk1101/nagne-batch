@@ -1,6 +1,6 @@
-package org.team.nagnebatch.place.domain.requestAttraction;
+package org.team.nagnebatch.place.domain.requestFestival;
 
-public class AttractionDTO {
+public class FestivalDTO {
 
   private String addr1;
 
@@ -8,10 +8,8 @@ public class AttractionDTO {
 
   private Long contentTypeId;
 
-  //기본 이미지
   private String firstImage;
 
-  //썸네일 이미지
   private String firstImage2;
 
   private double lat;
@@ -24,12 +22,17 @@ public class AttractionDTO {
 
   private String areaCode;
 
-  private String overview;
+  private String createdTime;
+
+  private String eventStartDate;
+
+  private String eventEndDate;
 
   private String modifiedTime;
 
-  //데이터 처리 동작을 맡는 것
-  public void addContent(String overview){
+  private String overview;
+
+  public void addOverview(String overview) {
     this.overview = overview;
   }
 
@@ -69,16 +72,31 @@ public class AttractionDTO {
     return title;
   }
 
-  public String getOverview() {
-    return overview;
-  }
-
   public String getAreaCode() {
     return areaCode;
   }
 
-  public String getModifiedTime() {return modifiedTime;}
+  public String getCreatedTime() {
+    return createdTime;
+  }
 
+  public String getEventStartDate() {
+    return eventStartDate;
+  }
+
+  public String getEventEndDate() {
+    return eventEndDate;
+  }
+
+  public String getModifiedTime() {
+    return modifiedTime;
+  }
+
+  public String getOverview() {
+    return overview;
+  }
+
+  // Builder 클래스
   public static class Builder {
 
     private String addr1;
@@ -91,6 +109,9 @@ public class AttractionDTO {
     private String tel;
     private String title;
     private String areaCode;
+    private String createdTime;
+    private String eventStartDate;
+    private String eventEndDate;
     private String overview;
     private String modifiedTime;
 
@@ -144,7 +165,22 @@ public class AttractionDTO {
       return this;
     }
 
-    public Builder overview(String overview){
+    public Builder createdTime(String createdTime) {
+      this.createdTime = createdTime;
+      return this;
+    }
+
+    public Builder eventStartDate(String eventStartDate) {
+      this.eventStartDate = eventStartDate;
+      return this;
+    }
+
+    public Builder eventEndDate(String eventEndDate) {
+      this.eventEndDate = eventEndDate;
+      return this;
+    }
+
+    public Builder overview(String overview) {
       this.overview = overview;
       return this;
     }
@@ -154,8 +190,8 @@ public class AttractionDTO {
       return this;
     }
 
-    public AttractionDTO build() {
-      AttractionDTO dto = new AttractionDTO();
+    public FestivalDTO build() {
+      FestivalDTO dto = new FestivalDTO();
       dto.addr1 = this.addr1;
       dto.contentId = this.contentId;
       dto.contentTypeId = this.contentTypeId;
@@ -166,6 +202,9 @@ public class AttractionDTO {
       dto.tel = this.tel;
       dto.title = this.title;
       dto.areaCode = this.areaCode;
+      dto.createdTime = this.createdTime;
+      dto.eventStartDate = this.eventStartDate;
+      dto.eventEndDate = this.eventEndDate;
       dto.overview = this.overview;
       dto.modifiedTime = this.modifiedTime;
       return dto;
